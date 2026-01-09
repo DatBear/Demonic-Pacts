@@ -1,10 +1,43 @@
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, ChevronRight, Target, Sword, Trophy, BookOpen, Calendar, Map } from "lucide-react";
+import { Sparkles, ChevronRight, Target, Sword, Trophy, BookOpen, Calendar, Map, Volume2, VolumeX } from "lucide-react";
 
 export default function Home() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.05; // Set volume to 5%
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            console.log("Autoplay prevented:", error);
+            setIsPlaying(false);
+          });
+      }
+    }
+  }, []);
+
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <div className="min-h-screen">
+      <audio ref={audioRef} src="/bg.wav" loop />
       {/* Hero Section */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-accent/5" />
@@ -162,6 +195,18 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <div className="fixed bottom-4 right-4 z-50">
+        <Button
+          variant="outline"
+          size="icon"
+          className="rounded-full w-12 h-12 shadow-lg bg-background/80 backdrop-blur-sm border-primary/20 hover:border-primary/50"
+          onClick={toggleAudio}
+        >
+          {isPlaying && <Volume2 className="h-6 w-6 text-primary" />}
+          {!isPlaying && <VolumeX className="h-6 w-6 text-muted-foreground" />}
+        </Button>
+      </div>
     </div>
   )
 }
