@@ -29,11 +29,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: List Output Files
+        run: ls -R dist
+
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          command: pages deploy dist --project-name=${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+      - name: Get Deployment URL
+        run: |
+          echo "Deployment URL: ${{ steps.deploy.outputs.pages-deployment-url }}"
+          echo "Deployment Alias URL: ${{ steps.deploy.outputs.pages-deployment-alias-url }}"
