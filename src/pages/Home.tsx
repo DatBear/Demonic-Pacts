@@ -58,7 +58,12 @@ export default function Home() {
 
           <div className="mx-auto mt-12 max-w-4xl">
             <div className="relative overflow-hidden rounded-xl border border-border bg-muted shadow-2xl">
-              <img src="/Splash.png" alt="Leagues VI: Demonic Pacts" className="object-cover w-full h-full" />
+              <img
+                src="/Splash.webp"
+                alt="Leagues VI: Demonic Pacts"
+                className="object-cover w-full h-full"
+                fetchPriority="high"
+              />
             </div>
           </div>
         </div>
