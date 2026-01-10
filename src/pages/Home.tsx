@@ -207,6 +207,7 @@ export default function Home() {
           size="icon"
           className="rounded-full w-12 h-12 shadow-lg bg-background/80 backdrop-blur-sm border-primary/20 hover:border-primary/50"
           onClick={toggleAudio}
+          aria-label={isPlaying ? "Mute background music" : "Play background music"}
         >
           {isPlaying && <Volume2 className="h-6 w-6 text-primary" />}
           {!isPlaying && <VolumeX className="h-6 w-6 text-muted-foreground" />}
