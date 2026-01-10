@@ -1,4 +1,8 @@
-# Copilot Instructions for ImageGallery.UI
+# Copilot Instructions for Demonic Pacts
+
+- This document shall herein be referred to as the "rules" for brevity.
+- When I say "follow the rules" I am asking you to adhere to the guidelines set forth in this document.
+- Always follow the rules.
 
 ## Project Overview
 
