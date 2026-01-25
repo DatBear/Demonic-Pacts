@@ -9,14 +9,14 @@ export default function Info() {
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-primary/5" />
 
-        <div className="container relative mx-auto px-4 py-4 flex flex-row">
-          <Link to="/" className="my-auto">
-            <Button variant="ghost" className="mb-6 gap-2">
+        <div className="container relative mx-auto px-4 py-6">
+          <Link to="/" className="absolute left-4 top-6">
+            <Button variant="ghost" className="gap-2">
               <ArrowLeft className="h-4 w-4" /> Back to Home
             </Button>
           </Link>
 
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-4xl text-center">
             <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
               <Skull className="h-4 w-4" />
               Official Announcement Summary
