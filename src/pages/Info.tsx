@@ -117,7 +117,7 @@ export default function Info() {
               </div>
               <div className="rounded-lg bg-muted/50 p-4">
                 <p className="font-semibold text-primary">Karamja Free Unlock</p>
-                <p className="text-muted-foreground">Karamja is still free but won't auto-unlock during tutorial. You'll be able to unlock within first few hours.</p>
+                <p className="text-muted-foreground">Karamja is still free but won't auto-unlock during tutorial. You'll be able to unlock within the first few hours.</p>
               </div>
               <div className="rounded-lg bg-muted/50 p-4">
                 <p className="font-semibold text-primary">Yama's Lair</p>
