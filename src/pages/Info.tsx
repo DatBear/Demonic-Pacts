@@ -75,27 +75,27 @@ export default function Info() {
             </CardHeader>
             <CardContent className="space-y-3">
               <ul className="grid gap-2 sm:grid-cols-2">
-                <li className="flex items-start gap-2">
+                <li className="flex items-center gap-2">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                   <span>Everyone plays as Ironman (no trading/GE)</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-center gap-2">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                   <span>Starting XP rate of 5x (increases with relics)</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-center gap-2">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                   <span>Unlimited run energy</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-center gap-2">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                   <span>Some quests auto-completed (Rune Mysteries, Druidic Ritual)</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-center gap-2">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                   <span>Choose from 3 starter relics (permanent choice)</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li className="flex items-center gap-2">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                   <span>Tasks range from Easy to Master tier</span>
                 </li>
@@ -117,7 +117,7 @@ export default function Info() {
               </div>
               <div className="rounded-lg bg-muted/50 p-4">
                 <p className="font-semibold text-primary">Karamja Free Unlock</p>
-                <p className="text-muted-foreground">Karamja is still free but won't auto-unlock during tutorial. Unlock within first few hours.</p>
+                <p className="text-muted-foreground">Karamja is still free but won't auto-unlock during tutorial. You'll be able to unlock within first few hours.</p>
               </div>
               <div className="rounded-lg bg-muted/50 p-4">
                 <p className="font-semibold text-primary">Yama's Lair</p>
