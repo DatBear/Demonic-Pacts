@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, ChevronRight, Target, Sword, Trophy, BookOpen, Calendar, Map, Volume2, VolumeX } from "lucide-react";
+import { Sparkles, ChevronRight, Target, Sword, Trophy, BookOpen, Calendar, Map, Volume2, VolumeX, Skull } from "lucide-react";
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -54,6 +55,13 @@ export default function Home() {
               Full planning features will be added soon after the January 25th reveal.<br />
               Get ready to dominate the point leaderboards.
             </p>
+
+            <Link to="/info">
+              <Button size="lg" className="gap-2 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900">
+                <Skull className="h-5 w-5" />
+                View League Info
+              </Button>
+            </Link>
           </div>
 
           <div className="mx-auto mt-12 max-w-4xl">
