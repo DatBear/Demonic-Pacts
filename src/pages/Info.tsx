@@ -9,8 +9,8 @@ export default function Info() {
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-primary/5" />
 
-        <div className="container relative mx-auto px-4 py-12">
-          <Link to="/">
+        <div className="container relative mx-auto px-4 py-4 flex flex-row">
+          <Link to="/" className="my-auto">
             <Button variant="ghost" className="mb-6 gap-2">
               <ArrowLeft className="h-4 w-4" /> Back to Home
             </Button>
