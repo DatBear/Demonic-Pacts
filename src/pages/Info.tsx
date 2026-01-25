@@ -116,8 +116,8 @@ export default function Info() {
                 <p className="text-muted-foreground">For the first time, you will NOT start in Misthalin. The new starting region is TBA.</p>
               </div>
               <div className="rounded-lg bg-muted/50 p-4">
-                <p className="font-semibold text-primary">Karamja Free Unlock</p>
-                <p className="text-muted-foreground">Karamja is still free but won't auto-unlock during tutorial. You'll be able to unlock within the first few hours.</p>
+                <p className="font-semibold text-primary">Karamja: Free Unlock</p>
+                <p className="text-muted-foreground">Karamja is still free but won't auto-unlock during tutorial. You'll be able to unlock it within the first few hours.</p>
               </div>
               <div className="rounded-lg bg-muted/50 p-4">
                 <p className="font-semibold text-primary">Yama's Lair</p>
