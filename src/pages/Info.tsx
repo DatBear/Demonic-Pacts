@@ -5,33 +5,34 @@ import { ArrowLeft, Calendar, Clock, Skull, Map, Swords, Gift, Flame, Users, Cro
 
 export default function Info() {
   return (
-    <div className="min-h-screen">
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-primary/5" />
+    <div className="min-h-screen relative">
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-950/20 via-background to-background pointer-events-none info-ambient-fade" />
 
-        <div className="container relative mx-auto px-4 py-6">
-          <Link to="/" className="absolute left-4 top-6">
-            <Button variant="ghost" className="gap-2">
+      <header className="relative border-b border-primary/20 bg-gradient-to-b from-primary/5 to-transparent">
+        <div className="container mx-auto px-4 py-6">
+          <Link to="/" className="flex items-center">
+            <Button variant="ghost" size="default" className="gap-2 text-muted-foreground hover:text-foreground flex items-center">
               <ArrowLeft className="h-4 w-4" /> Back to Home
             </Button>
           </Link>
 
-          <div className="mx-auto max-w-4xl text-center pt-12 md:pt-0">
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-              <Skull className="h-4 w-4" />
-              Official Announcement Summary
+          <div className="text-center pt-6 md:pt-0">
+            <div className="inline-flex items-center gap-2 mb-3">
+              <Flame className="h-5 w-5 text-primary animate-pulse" />
+              <span className="text-xs uppercase tracking-[0.3em] text-primary font-medium">Leagues VI</span>
+              <Flame className="h-5 w-5 text-primary animate-pulse" />
             </div>
-
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
-              Leagues VI: <span className="bg-gradient-to-b from-red-400 to-red-900 bg-clip-text text-transparent">Demonic Pacts</span>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tight">
+              <span className="bg-gradient-to-b from-red-400 via-red-600 to-red-950 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(220,38,38,0.3)]">
+                DEMONIC PACTS
+              </span>
             </h1>
-
-            <p className="text-lg text-muted-foreground">
-              Yama has taken interest in Leagues. Commit to a deadly entity for power beyond all normal possibility.
+            <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
+              Yama has taken interest in Leagues. Sign your contract and commit to a deadly entity for power beyond all normal possibility.
             </p>
           </div>
         </div>
-      </section>
+      </header>
 
       <section className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-4xl space-y-8">
@@ -73,8 +74,8 @@ export default function Info() {
                 Core Rules
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <ul className="grid gap-2 sm:grid-cols-2">
+            <CardContent>
+              <ul className="grid gap-4 sm:gap-2 sm:grid-cols-2">
                 <li className="flex items-center gap-2">
                   <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary" />
                   <span>Everyone plays as Ironman (no trading/GE)</span>
@@ -110,18 +111,18 @@ export default function Info() {
                 Area-Locking Changes
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-lg bg-muted/50 p-4">
+            <CardContent className="space-y-2">
+              <div className="rounded-lg bg-muted/50 p-2">
                 <p className="font-semibold text-primary">New Starting Region</p>
                 <p className="text-muted-foreground">For the first time, you will NOT start in Misthalin. The new starting region is TBA.</p>
               </div>
-              <div className="rounded-lg bg-muted/50 p-4">
+              <div className="rounded-lg bg-muted/50 p-2">
                 <p className="font-semibold text-primary">Karamja: Free Unlock</p>
                 <p className="text-muted-foreground">Karamja is still free but won't auto-unlock during tutorial. You'll be able to unlock it within the first few hours.</p>
               </div>
-              <div className="rounded-lg bg-muted/50 p-4">
+              <div className="rounded-lg bg-muted/50 p-2">
                 <p className="font-semibold text-primary">Yama's Lair</p>
-                <p className="text-muted-foreground">Tutorial takes place in a special version of Yama's lair with The Sage imprisoned. Accessible anytime.</p>
+                <p className="text-muted-foreground">Th tutorial takes place in a special version of Yama's lair with The Sage imprisoned. Accessible anytime.</p>
               </div>
             </CardContent>
           </Card>
@@ -137,7 +138,7 @@ export default function Info() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-lg border border-border bg-card p-4">
                   <p className="mb-2 font-semibold">Echo Bosses Return</p>
-                  <p className="text-sm text-muted-foreground">More powerful, mechanically different boss variants. New rewards replacing some from last league.</p>
+                  <p className="text-sm text-muted-foreground">More powerful, mechanically different boss variants. New rewards will be replacing some rewards from last league.</p>
                 </div>
                 <div className="rounded-lg border border-border bg-card p-4">
                   <p className="mb-2 font-semibold">Demonic Pacts</p>
@@ -146,7 +147,7 @@ export default function Info() {
               </div>
               <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4">
                 <p className="font-semibold text-destructive">No Sailing</p>
-                <p className="text-sm text-muted-foreground">Sailing excluded to let players experience it as intended first. Will be in 2027+ game modes.</p>
+                <p className="text-sm text-muted-foreground">Sailing excluded to let players experience it as intended first. Will be included in 2027+ game modes.</p>
               </div>
             </CardContent>
           </Card>

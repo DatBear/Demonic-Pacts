@@ -1,0 +1,12 @@
+@keyframes info-ambient-fade {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.info-ambient-fade {
+	animation: info-ambient-fade 2s ease-out forwards;
+}
