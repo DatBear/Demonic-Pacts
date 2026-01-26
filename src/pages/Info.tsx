@@ -16,7 +16,7 @@ export default function Info() {
             </Button>
           </Link>
 
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto max-w-4xl text-center pt-12 md:pt-0">
             <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
               <Skull className="h-4 w-4" />
               Official Announcement Summary
