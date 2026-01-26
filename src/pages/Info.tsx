@@ -28,7 +28,7 @@ export default function Info() {
               </span>
             </h1>
             <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-              Yama has taken interest in Leagues. Sign your contract and commit to a deadly entity for power beyond all normal possibility.
+              Yama has taken a keen interest in Leagues. Cleanse yourself with hellfire and commit to a deadly entity for power beyond all normal possibility.
             </p>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Info() {
               </div>
               <div className="rounded-lg bg-muted/50 p-2">
                 <p className="font-semibold text-primary">Yama's Lair</p>
-                <p className="text-muted-foreground">Th tutorial takes place in a special version of Yama's lair with The Sage imprisoned. Accessible anytime.</p>
+                <p className="text-muted-foreground">The tutorial takes place in a special version of Yama's lair with The Sage imprisoned. Accessible anytime.</p>
               </div>
             </CardContent>
           </Card>
