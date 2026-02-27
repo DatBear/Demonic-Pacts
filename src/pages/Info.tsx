@@ -43,7 +43,7 @@ export default function Info() {
                 <Calendar className="h-8 w-8 text-primary" />
                 <div>
                   <p className="text-sm text-muted-foreground">Release</p>
-                  <p className="font-bold">April 2026</p>
+                  <p className="font-bold">April 15, 2026</p>
                 </div>
               </CardContent>
             </Card>

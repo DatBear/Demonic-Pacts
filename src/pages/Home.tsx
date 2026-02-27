@@ -52,7 +52,7 @@ export default function Home() {
 
             <p className="mb-8 text-pretty text-lg text-muted-foreground md:text-xl">
               The ultimate planning tool for Old School RuneScape's <span className="bg-gradient-to-b from-red-400 to-red-900 bg-clip-text text-transparent font-bold">Demonic Pacts</span> League. <br />
-              Full planning features will be added soon after the January 25th reveal.<br />
+              Full planning features will be added before the league launch.<br />
               Get ready to dominate the point leaderboards.
             </p>
 
@@ -159,11 +159,10 @@ export default function Home() {
               Coming Soon
             </div>
 
-            <h2 className="mb-6 text-balance text-3xl font-bold md:text-4xl">More Details Revealed January 25, 2026</h2>
+            <h2 className="mb-6 text-balance text-3xl font-bold md:text-4xl">League Launches April 15, 2026</h2>
 
             <p className="mb-8 text-pretty text-lg text-muted-foreground">
-              More details about <span className="bg-gradient-to-b from-red-400 to-red-900 bg-clip-text text-transparent font-bold">Demonic Pacts</span> including regions, relics, and new mechanics will (probably) be revealed on January
-              25th. Check back here soon after the reveal so you can optimize your strategy before league start!
+              Check back here before league launch so you can optimize your strategy!
             </p>
 
             <div className="grid gap-6 text-left sm:grid-cols-2">
@@ -179,7 +178,7 @@ export default function Home() {
                 <CardContent className="p-6">
                   <h3 className="mb-2 font-semibold">Next League</h3>
                   <p className="mb-1 text-2xl font-bold"><span className="bg-gradient-to-b from-red-400 to-red-900 bg-clip-text text-transparent font-bold">Demonic Pacts</span></p>
-                  <p className="text-sm text-muted-foreground">Reveal: January 25, 2026</p>
+                  <p className="text-sm text-muted-foreground">April 15, 2026</p>
                 </CardContent>
               </Card>
             </div>
