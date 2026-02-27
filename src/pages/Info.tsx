@@ -113,8 +113,8 @@ export default function Info() {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="rounded-lg bg-muted/50 p-2">
-                <p className="font-semibold text-primary">New Starting Region</p>
-                <p className="text-muted-foreground">For the first time, you will NOT start in Misthalin. The new starting region is TBA.</p>
+                <p className="font-semibold text-primary">Varlamore Starting Region</p>
+                <p className="text-muted-foreground">For the first time, you will NOT start in Misthalin. The new starting region is Varlamore!</p>
               </div>
               <div className="rounded-lg bg-muted/50 p-2">
                 <p className="font-semibold text-primary">Karamja: Free Unlock</p>
