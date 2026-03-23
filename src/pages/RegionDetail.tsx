@@ -68,7 +68,7 @@ export default function RegionDetail() {
     backLabel="Back to League Info"
     actions={<>
       <Link to="/relics"><Button variant="outline">View Relics</Button></Link>
-      <Link to="/info#regions"><Button>All Region Pages</Button></Link>
+      <Link to="/info#regions"><Button>All Regions</Button></Link>
     </>}
   >
     <section className="container mx-auto px-4 py-12">
