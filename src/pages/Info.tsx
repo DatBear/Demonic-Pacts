@@ -197,7 +197,7 @@ export default function Info() {
 
           <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/10">
             <CardContent className="p-6 text-center">
-              <p className="mx-auto mb-4 max-w-3xl text-sm text-muted-foreground">Jagex said a new Leagues VI reveal will drop every day until launch. This hub now has the structure to keep layering those reveals in as the region, relic, and pact systems get clearer.</p>
+              <p className="mx-auto mb-4 max-w-3xl text-sm text-muted-foreground">Jagex said a new Leagues VI reveal will drop every day until launch.</p>
               <div className="flex flex-wrap justify-center gap-3">
                 <a href="https://discord.gg/4hM6AUpN" target="_blank" rel="noopener noreferrer"><Button variant="secondary">Leagues Discord</Button></a>
                 <a href="https://secure.runescape.com/m=news/get-ready-for-leagues-vi-demonic-pacts---april-15th?oldschool=1" target="_blank" rel="noopener noreferrer"><Button variant="outline">Official Reveal Post</Button></a>
