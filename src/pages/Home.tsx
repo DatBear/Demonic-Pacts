@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, ChevronRight, Target, Sword, Trophy, BookOpen, Calendar, Map, Volume2, VolumeX, Skull } from "lucide-react";
+import { BookOpen, ChevronRight, Compass, Calendar, Flame, Volume2, VolumeX, Skull } from "lucide-react";
 
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -39,7 +39,6 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <audio ref={audioRef} src="/bg.wav" loop />
-      {/* Hero Section */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-accent/5" />
 
@@ -56,12 +55,28 @@ export default function Home() {
               Get ready to dominate the point leaderboards.
             </p>
 
-            <Link to="/info">
-              <Button size="lg" className="gap-2 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900">
-                <Skull className="h-5 w-5" />
-                View League Info
-              </Button>
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Link to="/info">
+                <Button size="lg" className="gap-2 bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900">
+                  <Skull className="h-5 w-5" />
+                  View League Info
+                </Button>
+              </Link>
+
+              <Link to="/relics">
+                <Button size="lg" variant="outline" className="gap-2 border-primary/30 bg-background/70 text-foreground hover:bg-primary/10">
+                  <Flame className="h-5 w-5 text-primary" />
+                  Browse Relics
+                </Button>
+              </Link>
+
+              <Link to="/regions/karamja">
+                <Button size="lg" variant="outline" className="gap-2 border-primary/30 bg-background/70 text-foreground hover:bg-primary/10">
+                  <Compass className="h-5 w-5 text-primary" />
+                  Region Pages
+                </Button>
+              </Link>
+            </div>
           </div>
 
           <div className="mx-auto mt-12 max-w-4xl">
@@ -77,80 +92,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Grid */}
-      {/* <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="mb-12 text-center">
-          <h2 className="mb-4 text-balance text-3xl font-bold md:text-4xl">Everything You Need to Conquer Leagues</h2>
-          <p className="text-pretty text-lg text-muted-foreground">
-            Powerful planning tools designed for competitive OSRS players
-          </p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card className="border-border bg-card">
-            <CardContent className="p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Map className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Region Planning</h3>
-              <p className="text-muted-foreground">
-                Compare all unlockable regions and plan your optimal progression path based on your playstyle and goals.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-border bg-card">
-            <CardContent className="p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Sparkles className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Relic Optimizer</h3>
-              <p className="text-muted-foreground">
-                Explore all relic tiers and build the perfect loadout for maximum power and efficiency throughout the
-                league.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-border bg-card">
-            <CardContent className="p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Target className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Task Tracker</h3>
-              <p className="text-muted-foreground">
-                Track your league points progress and prioritize high-value tasks to unlock regions and relics faster.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-border bg-card">
-            <CardContent className="p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Sword className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Combat Masteries</h3>
-              <p className="text-muted-foreground">
-                Plan your combat mastery progression and optimize your build for PvM dominance in your chosen style.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-border bg-card">
-            <CardContent className="p-6">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                <Trophy className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="mb-2 text-xl font-semibold">Trophy Calculator</h3>
-              <p className="text-muted-foreground">
-                Set your trophy tier goals and calculate the exact point requirements to achieve your target rank.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </section> */}
-
-      {/* League Timeline */}
       <section className="border-y border-border bg-muted/30 py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
@@ -165,7 +106,7 @@ export default function Home() {
               Check back here before league launch so you can optimize your strategy!
             </p>
 
-            <div className="grid gap-6 text-left sm:grid-cols-2">
+            <div className="mb-8 grid gap-6 text-left sm:grid-cols-2">
               <Card className="border-border bg-card">
                 <CardContent className="p-6">
                   <h3 className="mb-2 font-semibold">Previous League</h3>
@@ -182,11 +123,36 @@ export default function Home() {
                 </CardContent>
               </Card>
             </div>
+
+            <div className="grid gap-4 text-left md:grid-cols-3">
+              <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
+                <CardContent className="p-5">
+                  <BookOpen className="mb-3 h-5 w-5 text-primary" />
+                  <p className="font-semibold">Expanded League Hub</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Updated rules, starting setup, Varlamore notes, and league-wide modifiers from the March 23 reveal post.</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
+                <CardContent className="p-5">
+                  <Compass className="mb-3 h-5 w-5 text-primary" />
+                  <p className="font-semibold">Unlockable Region Pages</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Every unlockable region now has its own detailed page with key details, unlocks, and drop targets.</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
+                <CardContent className="p-5">
+                  <Flame className="mb-3 h-5 w-5 text-primary" />
+                  <p className="font-semibold">Relic Tracker</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Tier 1 relics have been revealed. Check back there as Jagex reveals the details for Tiers 2-8!</p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-6 text-balance text-3xl font-bold md:text-4xl">Ready to Dominate the Leaderboards?</h2>
@@ -221,5 +187,5 @@ export default function Home() {
         </Button>
       </div>
     </div>
-  )
+  );
 }
