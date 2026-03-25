@@ -24,7 +24,7 @@ export interface RegionData {
 export interface RelicData {
   name: string;
   summary: string;
-  toggleableEffect: string;
+  toggleableEffect?: string;
   activeEffects: string[];
   notes: string[];
 }
@@ -852,8 +852,22 @@ export const relicTiers: RelicTierData[] = [
     tier: 6,
     title: "Tier 6",
     passiveEffects: ["No passive effect has been announced yet."],
-    status: "Tier 6 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 6 relic Culling Spree has been revealed.",
+    relics: [
+      {
+        name: "Culling Spree",
+        summary: "A Slayer-focused relic that gives you direct control over task pacing while massively amplifying superior creature rewards and chaining potential.",
+        activeEffects: [
+          "Players may choose their Slayer tier from three options.",
+          "Choose how many monsters to slay.",
+          "There is a 50% chance of a superior spawning another superior on death.",
+          "Superior creatures always drop 1-3 elite clues.",
+          "Unlock all Slayer Task perks for free.",
+          "Rune pouches, herb sacks, and looting bags in the Slayer store are all free.",
+        ],
+        notes: [],
+      },
+    ],
   },
   {
     tier: 7,
@@ -866,8 +880,22 @@ export const relicTiers: RelicTierData[] = [
     tier: 8,
     title: "Tier 8",
     passiveEffects: ["No passive effect has been announced yet."],
-    status: "Tier 8 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 8 relic Minion has been revealed.",
+    relics: [
+      {
+        name: "Minion",
+        summary: "A summoning relic that gives you a powerful long-duration minion with combat support, auto-looting, and scaling power.",
+        toggleableEffect: "Your minion loots items from the ground for you, with customizable loot thresholds and settings.",
+        activeEffects: [
+          "Summon a powerful minion which lasts for 30 minutes.",
+          "In multi-combat, your minion unleashes an AOE attack based on the target's weakest style: Ranged or Magic.",
+          "Your minion will loot items on the ground for you.",
+          "You can customize loot thresholds and settings.",
+          "Offer Zamorak items to your minion to increase its power.",
+        ],
+        notes: [],
+      },
+    ],
   },
 ];
 

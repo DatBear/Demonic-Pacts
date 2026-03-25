@@ -15,11 +15,49 @@ function PassiveList({ items }: { items: string[] }) {
   </ul>;
 }
 
+function getRelicImageSrc(tierNumber: number, relicName?: string) {
+  if (!relicName) {
+    return "/relics/Unknown.png";
+  }
+
+  const normalizedName = relicName.replace(/[’']/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+
+  return `/relics/T${tierNumber}_${normalizedName}.png`;
+}
+
+function getTierSlotCount(tierNumber: number) {
+  if (tierNumber === 7) {
+    return 2;
+  }
+
+  return 3;
+}
+
+function getTierRevealLabel(revealedCount: number, slotCount: number) {
+  if (revealedCount === 0) {
+    return "None revealed";
+  }
+
+  return `${revealedCount}/${slotCount} revealed`;
+}
+
+function getTierRevealLabelClassName(revealedCount: number, slotCount: number) {
+  if (revealedCount === 0) {
+    return "text-red-400";
+  }
+
+  if (revealedCount === slotCount) {
+    return "text-green-400";
+  }
+
+  return "text-yellow-400";
+}
+
 export default function Relics() {
   return <LeaguePageFrame
     eyebrow="Relics"
     title="Relic Tracker"
-    description="Tier 1 relics have been revealed. Check back here as Jagex reveals the details for Tiers 2-8!"
+    description="Tier 1, Tier 6, and Tier 8 relics have been revealed. Check back here as Jagex reveals the details for the remaining tiers!"
     backTo="/info"
     backLabel="Back to League Info"
     actions={<>
@@ -29,10 +67,25 @@ export default function Relics() {
   >
     <section className="container mx-auto px-4 py-12">
       <div className="mx-auto max-w-6xl space-y-8">
+        <div className="space-y-3 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground">Quick Navigation</p>
+          <div className="overflow-x-auto pb-2">
+            <div className="flex min-w-max justify-center gap-3">
+              {relicTiers.map(tier => <a key={tier.tier} href={`#T${tier.tier}`} className="shrink-0">
+                <Button variant="outline" className="h-auto py-3">
+                  <span className="flex flex-col items-center leading-tight">
+                    <span>Tier {tier.tier}</span>
+                    <span className={cn("mt-1 text-xs font-normal", getTierRevealLabelClassName(tier.relics.length, getTierSlotCount(tier.tier)))}>{getTierRevealLabel(tier.relics.length, getTierSlotCount(tier.tier))}</span>
+                  </span>
+                </Button>
+              </a>)}
+            </div>
+          </div>
+        </div>
 
         <div className="space-y-6">
           {relicTiers.map(tier => {
-            const slotCount = tier.tier === 7 ? 2 : 3;
+            const slotCount = getTierSlotCount(tier.tier);
             const relicGridClassName = cn(
               "grid gap-4 md:grid-cols-2",
               slotCount === 3 && "xl:grid-cols-3",
@@ -42,9 +95,12 @@ export default function Relics() {
             let relicContent = <div className={relicGridClassName}>
               {Array.from({ length: slotCount }, (_, idx) => <Card key={`${tier.tier}-${idx + 1}`} className="border-dashed border-primary/20 bg-background/50">
                 <CardContent className="flex min-h-48 flex-col justify-between p-5">
-                  <div>
+                  <div className="space-y-3">
                     <p className="text-xs uppercase tracking-[0.28em] text-primary">Open Slot</p>
-                    <p className="mt-3 text-lg font-semibold">Tier {tier.tier} relic pending</p>
+                    <div className="flex items-center gap-3">
+                      <img src={getRelicImageSrc(tier.tier)} alt="Unknown relic icon" className="h-[60px] w-[60px] shrink-0" />
+                      <p className="text-lg font-semibold">Tier {tier.tier} relic pending</p>
+                    </div>
                   </div>
                   <p className="text-sm font-semibold uppercase tracking-[0.22em] text-muted-foreground">Awaiting Jagex Reveal</p>
                 </CardContent>
@@ -55,14 +111,17 @@ export default function Relics() {
               relicContent = <div className={relicGridClassName}>
                 {tier.relics.map(relic => <Card key={relic.name} className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
                   <CardHeader>
-                    <CardTitle className="text-xl">{relic.name}</CardTitle>
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <img src={getRelicImageSrc(tier.tier, relic.name)} alt={`${relic.name} relic icon`} className="h-[60px] w-[60px] shrink-0" />
+                      <span>{relic.name}</span>
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <p className="text-sm text-muted-foreground">{relic.summary}</p>
-                    <div className="rounded-lg border border-primary/20 bg-background/60 p-4">
+                    {relic.toggleableEffect && <div className="rounded-lg border border-primary/20 bg-background/60 p-4">
                       <p className="text-xs uppercase tracking-[0.24em] text-primary">Toggleable Effect</p>
                       <p className="mt-2 text-sm text-foreground">{relic.toggleableEffect}</p>
-                    </div>
+                    </div>}
                     <div>
                       <p className="mb-3 text-sm font-semibold">Active Effects</p>
                       <PassiveList items={relic.activeEffects} />
@@ -73,10 +132,22 @@ export default function Relics() {
                     </div>}
                   </CardContent>
                 </Card>)}
+                {Array.from({ length: Math.max(slotCount - tier.relics.length, 0) }, (_, idx) => <Card key={`${tier.tier}-pending-${idx + 1}`} className="border-dashed border-primary/20 bg-background/50">
+                  <CardContent className="flex min-h-48 flex-col justify-between p-5">
+                    <div className="space-y-3">
+                      <p className="text-xs uppercase tracking-[0.28em] text-primary">Open Slot</p>
+                      <div className="flex items-center gap-3">
+                        <img src={getRelicImageSrc(tier.tier)} alt="Unknown relic icon" className="h-[60px] w-[60px] shrink-0" />
+                        <p className="text-lg font-semibold">Tier {tier.tier} relic pending</p>
+                      </div>
+                    </div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.22em] text-muted-foreground">Awaiting Jagex Reveal</p>
+                  </CardContent>
+                </Card>)}
               </div>;
             }
 
-            return <Card key={tier.tier} className="border-border bg-card/90">
+            return <Card key={tier.tier} id={`T${tier.tier}`} className="scroll-mt-24 border-border bg-card/90">
               <CardHeader className="border-b border-border/80">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div>

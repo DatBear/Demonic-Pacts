@@ -70,10 +70,10 @@ export default function Home() {
                 </Button>
               </Link>
 
-              <Link to="/regions/karamja">
+              <Link to="/info#regions">
                 <Button size="lg" variant="outline" className="gap-2 border-primary/30 bg-background/70 text-foreground hover:bg-primary/10">
                   <Compass className="h-5 w-5 text-primary" />
-                  Region Pages
+                  Regions
                 </Button>
               </Link>
             </div>
@@ -145,7 +145,7 @@ export default function Home() {
                 <CardContent className="p-5">
                   <Flame className="mb-3 h-5 w-5 text-primary" />
                   <p className="font-semibold">Relic Tracker</p>
-                  <p className="mt-2 text-sm text-muted-foreground">Tier 1 relics have been revealed. Check back there as Jagex reveals the details for Tiers 2-8!</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Tier 1, Tier 6, and Tier 8 relics have been revealed. <br />Check back there as Jagex reveals the details for the remaining tiers!</p>
                 </CardContent>
               </Card>
             </div>
