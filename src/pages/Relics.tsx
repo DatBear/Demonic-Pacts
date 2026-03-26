@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Flame, Layers3, Sparkles } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LeaguePageFrame } from "@/components/LeaguePageFrame";
@@ -23,6 +23,22 @@ function getRelicImageSrc(tierNumber: number, relicName?: string) {
   const normalizedName = relicName.replace(/[’']/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
 
   return `/relics/T${tierNumber}_${normalizedName}.png`;
+}
+
+function RelicImage({ alt, relicName, tierNumber }: { alt: string; relicName?: string; tierNumber: number }) {
+  const [src, setSrc] = useState(() => getRelicImageSrc(tierNumber, relicName));
+
+  const handleError = () => {
+    setSrc(currentSrc => {
+      if (currentSrc === "/relics/Unknown.png") {
+        return currentSrc;
+      }
+
+      return "/relics/Unknown.png";
+    });
+  };
+
+  return <img src={src} alt={alt} onError={handleError} className="h-[60px] w-[60px] shrink-0" />;
 }
 
 function getTierSlotCount(tierNumber: number) {
@@ -57,7 +73,7 @@ export default function Relics() {
   return <LeaguePageFrame
     eyebrow="Relics"
     title="Relic Tracker"
-    description="Tier 1, Tier 6, and Tier 8 relics have been revealed. Check back here as Jagex reveals the details for the remaining tiers!"
+    description="Tier 1, Tier 3, Tier 6, and Tier 8 relics have been revealed. Check back here as Jagex reveals the details for the remaining tiers!"
     backTo="/info"
     backLabel="Back to League Info"
     actions={<>
@@ -98,7 +114,7 @@ export default function Relics() {
                   <div className="space-y-3">
                     <p className="text-xs uppercase tracking-[0.28em] text-primary">Unknown Relic</p>
                     <div className="flex items-center gap-3">
-                      <img src={getRelicImageSrc(tier.tier)} alt="Unknown relic icon" className="h-[60px] w-[60px] shrink-0" />
+                      <RelicImage tierNumber={tier.tier} alt="Unknown relic icon" />
                       <p className="text-lg font-semibold">Tier {tier.tier} relic pending</p>
                     </div>
                   </div>
@@ -112,7 +128,7 @@ export default function Relics() {
                 {tier.relics.map(relic => <Card key={relic.name} className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3 text-xl">
-                      <img src={getRelicImageSrc(tier.tier, relic.name)} alt={`${relic.name} relic icon`} className="h-[60px] w-[60px] shrink-0" />
+                      <RelicImage tierNumber={tier.tier} relicName={relic.name} alt={`${relic.name} relic icon`} />
                       <span>{relic.name}</span>
                     </CardTitle>
                   </CardHeader>
@@ -137,7 +153,7 @@ export default function Relics() {
                     <div className="space-y-3">
                       <p className="text-xs uppercase tracking-[0.28em] text-primary">Unknown Relic</p>
                       <div className="flex items-center gap-3">
-                        <img src={getRelicImageSrc(tier.tier)} alt="Unknown relic icon" className="h-[60px] w-[60px] shrink-0" />
+                        <RelicImage tierNumber={tier.tier} alt="Unknown relic icon" />
                         <p className="text-lg font-semibold">Tier {tier.tier} relic pending</p>
                       </div>
                     </div>
