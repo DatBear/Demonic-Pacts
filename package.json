@@ -18,6 +18,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "data:raging-echoes": "node scripts/generate-raging-echoes-data.mjs",
     "lint": "eslint .",
     "relic:image:t6": "node scripts/process-relic-image.mjs",
     "preview": "vite preview"
