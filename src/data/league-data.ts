@@ -828,8 +828,22 @@ export const relicTiers: RelicTierData[] = [
       "Slayer points are multiplied by 5 and you no longer need five starter tasks before earning points.",
       "Superior Slayer rates improve to a 1 in 50 chance.",
     ],
-    status: "Tier 3 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 3 relic Evil Eye has been revealed.",
+    relics: [
+      {
+        name: "Evil Eye",
+        summary: "A combat-routing relic that grants the Evil Eye, giving direct teleports to boss and raid entrances from the Combat Achievements list.",
+        toggleableEffect: "Upon choosing this relic, you receive the Evil Eye.",
+        activeEffects: [
+          "The Evil Eye lets you teleport to the entrance of any boss or raid listed in the Combat Achievements interface.",
+          "Barrows teleports can send you either to the chest or back to the surface.",
+          "You can teleport to each Moon of Peril individually.",
+          "The Evil Eye ignores Wilderness teleport restrictions.",
+          "The Evil Eye cannot teleport you into an area you have not unlocked.",
+        ],
+        notes: ["The Evil Eye can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+      },
+    ],
   },
   {
     tier: 4,
