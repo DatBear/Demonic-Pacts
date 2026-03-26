@@ -135,7 +135,7 @@ export default function Relics() {
                 {Array.from({ length: Math.max(slotCount - tier.relics.length, 0) }, (_, idx) => <Card key={`${tier.tier}-pending-${idx + 1}`} className="border-dashed border-primary/20 bg-background/50">
                   <CardContent className="flex min-h-48 flex-col justify-between p-5">
                     <div className="space-y-3">
-                      <p className="text-xs uppercase tracking-[0.28em] text-primary">Open Slot</p>
+                      <p className="text-xs uppercase tracking-[0.28em] text-primary">Unknown Relic</p>
                       <div className="flex items-center gap-3">
                         <img src={getRelicImageSrc(tier.tier)} alt="Unknown relic icon" className="h-[60px] w-[60px] shrink-0" />
                         <p className="text-lg font-semibold">Tier {tier.tier} relic pending</p>
