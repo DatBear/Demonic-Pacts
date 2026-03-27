@@ -1,5 +1,5 @@
 type PlanRegion = {
-  id: number;
+  code: string;
 }
 
 export default PlanRegion;

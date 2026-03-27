@@ -261,12 +261,12 @@ export default function Tasks() {
         <td className="w-5 align-middle">
           <RegionBadge region={task.region} className="h-5 w-5 ml-2" />
         </td>
-        <td className="px-4 py-4">
+        <td className="px-4 py-4 align-middle">
           <p className="text-sm font-semibold text-foreground">{task.name}</p>
         </td>
-        <td className="px-4 py-4 text-sm text-muted-foreground">{task.description}</td>
-        <td className="min-w-[20rem] px-4 py-4"><RequirementList requirements={task.requirements} /></td>
-        <td className={cn("px-4 py-4 text-right text-sm font-semibold", getDifficultyPointsClassName(task.difficulty))}>{task.points.toLocaleString()}</td>
+        <td className="px-4 py-4 text-sm text-muted-foreground align-middle">{task.description}</td>
+        <td className="min-w-[20rem] px-4 py-4 align-middle"><RequirementList requirements={task.requirements} /></td>
+        <td className={cn("px-4 py-4 text-right text-sm font-semibold align-middle", getDifficultyPointsClassName(task.difficulty))}>{task.points.toLocaleString()}</td>
       </tr>)}
     </>;
   }

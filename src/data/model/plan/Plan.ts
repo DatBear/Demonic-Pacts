@@ -4,7 +4,8 @@ import PlanTask from "./PlanTask";
 
 type Plan = {
   regions: PlanRegion[];
-  //combatMasteries: Plan[];
   relics: PlanRelic[];
   tasks: PlanTask[];
 }
+
+export default Plan;

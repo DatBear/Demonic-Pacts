@@ -1,6 +1,5 @@
 type PlanTask = {
   id: number;
-  order: number;
   note: string;
 }
 

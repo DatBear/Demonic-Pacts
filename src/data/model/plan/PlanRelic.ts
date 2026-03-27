@@ -1,4 +1,4 @@
 type PlanRelic = {
-  id: number;
+  code: string;
 };
 export default PlanRelic;

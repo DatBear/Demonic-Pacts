@@ -1,6 +1,6 @@
 type Relic = {
   name: string;
-  shortCode: string;
+  code: string;
 }
 
 export default Relic;
