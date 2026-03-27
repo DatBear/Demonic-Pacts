@@ -19,7 +19,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "relic:image:t6": "node scripts/process-relic-image.mjs",
+    "relic:image": "node scripts/process-relic-image.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

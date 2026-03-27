@@ -25,6 +25,7 @@ export interface RelicData {
   name: string;
   summary: string;
   toggleableEffect?: string;
+  toggleableEffects?: string[];
   activeEffects: string[];
   notes: string[];
 }
@@ -816,8 +817,28 @@ export const relicTiers: RelicTierData[] = [
     tier: 2,
     title: "Tier 2",
     passiveEffects: ["XP multiplier increases from 5x to 8x."],
-    status: "Tier 2 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 2 relic Woodsman has been revealed.",
+    relics: [
+      {
+        name: "Woodsman",
+        summary: "A gathering relic focused on Woodcutting, Fletching, and Hunter, with guaranteed catches, faster traps, and automated log burning.",
+        toggleableEffects: [
+          "Hunter traps harvest directly to your bank.",
+          "Logs chopped will be automatically burned.",
+        ],
+        activeEffects: [
+          "All items are processed at once while Fletching. Stackable Fletching items are capped at 10x the regular amount per action.",
+          "Chopped logs are automatically burned while Woodcutting, granting full Firemaking XP. This effect can be toggled above.",
+          "Hunter actions have a 100% success rate.",
+          "Traps attract animals faster and give double loot and XP.",
+          "Traps always drop a random herb seed or tree seed when harvested.",
+          "Hunter rumours give double XP and Hunters' loot sacks award 2x as much loot.",
+          "All loot from jarred implings is doubled and noted, and the jars no longer break when opened.",
+          "Quetzal whistles no longer lose charges.",
+        ],
+        notes: [],
+      },
+    ],
   },
   {
     tier: 3,

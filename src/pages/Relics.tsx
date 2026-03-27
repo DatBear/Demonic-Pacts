@@ -69,11 +69,23 @@ function getTierRevealLabelClassName(revealedCount: number, slotCount: number) {
   return "text-yellow-400";
 }
 
+function getToggleableEffects(toggleableEffect?: string, toggleableEffects?: string[]) {
+  if (toggleableEffects && toggleableEffects.length > 0) {
+    return toggleableEffects;
+  }
+
+  if (toggleableEffect) {
+    return [toggleableEffect];
+  }
+
+  return [];
+}
+
 export default function Relics() {
   return <LeaguePageFrame
     eyebrow="Relics"
     title="Relic Tracker"
-    description="Tier 1, Tier 3, Tier 6, and Tier 8 relics have been revealed. Check back here as Jagex reveals the details for the remaining tiers!"
+    description="Check back here as Jagex reveals the details for the remaining tiers!"
     backTo="/info"
     backLabel="Back to League Info"
     actions={<>
@@ -125,29 +137,35 @@ export default function Relics() {
 
             if (tier.relics.length > 0) {
               relicContent = <div className={relicGridClassName}>
-                {tier.relics.map(relic => <Card key={relic.name} className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-xl">
-                      <RelicImage tierNumber={tier.tier} relicName={relic.name} alt={`${relic.name} relic icon`} />
-                      <span>{relic.name}</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground">{relic.summary}</p>
-                    {relic.toggleableEffect && <div className="rounded-lg border border-primary/20 bg-background/60 p-4">
-                      <p className="text-xs uppercase tracking-[0.24em] text-primary">Toggleable Effect</p>
-                      <p className="mt-2 text-sm text-foreground">{relic.toggleableEffect}</p>
-                    </div>}
-                    <div>
-                      <p className="mb-3 text-sm font-semibold">Active Effects</p>
-                      <PassiveList items={relic.activeEffects} />
-                    </div>
-                    {relic.notes.length > 0 && <div>
-                      <p className="mb-3 text-sm font-semibold">Notes</p>
-                      <PassiveList items={relic.notes} />
-                    </div>}
-                  </CardContent>
-                </Card>)}
+                {tier.relics.map(relic => {
+                  const toggleableEffects = getToggleableEffects(relic.toggleableEffect, relic.toggleableEffects);
+
+                  return <Card key={relic.name} className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-3 text-xl">
+                        <RelicImage tierNumber={tier.tier} relicName={relic.name} alt={`${relic.name} relic icon`} />
+                        <span>{relic.name}</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm text-muted-foreground">{relic.summary}</p>
+                      {toggleableEffects.length > 0 && <div className="rounded-lg border border-primary/20 bg-background/60 p-4">
+                        <p className="text-xs uppercase tracking-[0.24em] text-primary">Toggleable Effects</p>
+                        <div className="mt-3">
+                          <PassiveList items={toggleableEffects} />
+                        </div>
+                      </div>}
+                      <div>
+                        <p className="mb-3 text-sm font-semibold">Active Effects</p>
+                        <PassiveList items={relic.activeEffects} />
+                      </div>
+                      {relic.notes.length > 0 && <div>
+                        <p className="mb-3 text-sm font-semibold">Notes</p>
+                        <PassiveList items={relic.notes} />
+                      </div>}
+                    </CardContent>
+                  </Card>;
+                })}
                 {Array.from({ length: Math.max(slotCount - tier.relics.length, 0) }, (_, idx) => <Card key={`${tier.tier}-pending-${idx + 1}`} className="border-dashed border-primary/20 bg-background/50">
                   <CardContent className="flex min-h-48 flex-col justify-between p-5">
                     <div className="space-y-3">
