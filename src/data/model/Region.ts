@@ -1,6 +1,7 @@
 type Region = {
   name: string;
-  shortCode: string;
+  code: string;
+  badgeImage: string;
 }
 
 export default Region;

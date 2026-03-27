@@ -21,6 +21,7 @@
     "data:raging-echoes": "node scripts/generate-raging-echoes-data.mjs",
     "lint": "eslint .",
     "relic:image:t6": "node scripts/process-relic-image.mjs",
+    "skills:download": "node scripts/download-skill-icons.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

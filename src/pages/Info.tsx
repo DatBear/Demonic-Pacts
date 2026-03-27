@@ -38,6 +38,7 @@ export default function Info() {
     description="Updated from the March 23 official roundup: the revised start, Varlamore opening route, league-wide rule changes, unlockable region references, and the first revealed relic tier."
     actions={<>
       <a href="#regions"><Button variant="outline">Unlockable Regions</Button></a>
+      <Link to="/tasks"><Button variant="outline">Task Tracker</Button></Link>
       <Link to="/relics"><Button variant="outline">Relics</Button></Link>
       <a href="https://secure.runescape.com/m=news/get-ready-for-leagues-vi-demonic-pacts---april-15th?oldschool=1" target="_blank" rel="noopener noreferrer"><Button variant="outline">Official Post</Button></a>
     </>}

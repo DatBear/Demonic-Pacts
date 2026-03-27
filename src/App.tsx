@@ -3,6 +3,7 @@ import Home from "@/pages/Home";
 import Info from "@/pages/Info";
 import RegionDetail from "@/pages/RegionDetail";
 import Relics from "@/pages/Relics";
+import Tasks from "@/pages/Tasks";
 import { RouteScrollManager } from "@/components/RouteScrollManager";
 import "./App.css";
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/info" element={<Info />} />
         <Route path="/relics" element={<Relics />} />
+        <Route path="/tasks" element={<Tasks />} />
         <Route path="/regions/:regionSlug" element={<RegionDetail />} />
       </Routes>
     </main>

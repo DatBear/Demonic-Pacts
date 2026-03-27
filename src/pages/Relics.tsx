@@ -77,6 +77,7 @@ export default function Relics() {
     backTo="/info"
     backLabel="Back to League Info"
     actions={<>
+      <Link to="/tasks"><Button variant="outline">Task Tracker</Button></Link>
       <Link to="/info#regions"><Button variant="outline">Browse Regions</Button></Link>
       <a href="https://secure.runescape.com/m=news/get-ready-for-leagues-vi-demonic-pacts---april-15th?oldschool=1" target="_blank" rel="noopener noreferrer"><Button>Official Reveal Post</Button></a>
     </>}

@@ -3,51 +3,63 @@ import type Region from "@/data/model/Region";
 const ragingEchoesRegions: Region[] = [
   {
     "name": "General",
-    "shortCode": "GEN"
+    "code": "GEN",
+    "badgeImage": "/regions/badge/General.png"
   },
   {
     "name": "Asgarnia",
-    "shortCode": "ASG"
+    "code": "ASG",
+    "badgeImage": "/regions/badge/Asgarnia.png"
   },
   {
     "name": "Desert",
-    "shortCode": "DES"
+    "code": "DES",
+    "badgeImage": "/regions/badge/Desert.png"
   },
   {
     "name": "Fremennik",
-    "shortCode": "FRE"
+    "code": "FRE",
+    "badgeImage": "/regions/badge/Fremennik.png"
   },
   {
     "name": "Kandarin",
-    "shortCode": "KAN"
+    "code": "KAN",
+    "badgeImage": "/regions/badge/Kandarin.png"
   },
   {
     "name": "Karamja",
-    "shortCode": "KAR"
+    "code": "KAR",
+    "badgeImage": "/regions/badge/Karamja.png"
   },
   {
     "name": "Kourend",
-    "shortCode": "KOU"
+    "code": "KOU",
+    "badgeImage": "/regions/badge/Kourend.png"
   },
   {
     "name": "Misthalin",
-    "shortCode": "MIS"
+    "code": "MIS",
+    "badgeImage": "/regions/badge/Misthalin.png"
   },
   {
     "name": "Morytania",
-    "shortCode": "MOR"
+    "code": "MOR",
+    "badgeImage": "/regions/badge/Morytania.png"
   },
   {
     "name": "Tirannwn",
-    "shortCode": "TIR"
+    "code": "TIR",
+    "badgeImage": "/regions/badge/Tirannwn.png"
   },
   {
     "name": "Varlamore",
-    "shortCode": "VAR"
+    "code": "VAR",
+    "badgeImage": "/regions/badge/Varlamore.png"
   },
   {
     "name": "Wilderness",
-    "shortCode": "WIL"
+    "code": "WIL",
+    "badgeImage": "/regions/badge/Wilderness.png"
   }
 ];
 
