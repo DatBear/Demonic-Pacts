@@ -936,7 +936,7 @@ export const relicTiers: RelicTierData[] = [
     tier: 8,
     title: "Tier 8",
     passiveEffects: ["No passive effect has been announced yet."],
-    status: "The Tier 8 relic Minion has been revealed.",
+    status: "The Tier 8 relics Minion and Flask of Fervour have been revealed.",
     relics: [
       {
         name: "Minion",
@@ -954,6 +954,23 @@ export const relicTiers: RelicTierData[] = [
           "The Minion does not fight in PvP and does not fight against Yama.",
         ],
         notes: ["The Minion whistle can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+      },
+      {
+        name: "Flask of Fervour",
+        summary: "A panic-button combat relic that grants the Flask of Fervour, restoring your core combat resources before triggering a brief invulnerability window and Prayer-scaled explosions around you.",
+        toggleableEffect: "Upon choosing this relic, you receive the Flask of Fervour.",
+        activeEffects: [
+          "When the Flask is consumed, your Hitpoints are restored to full.",
+          "When the Flask is consumed, your Prayer points are restored to full.",
+          "When the Flask is consumed, your special attack energy is restored to full.",
+          "Over the next 2.4 seconds, the sigil triggers three explosions which deal 60% of your base Prayer level as typeless damage to all enemies within 3 tiles of you.",
+          "In PvP, those explosions deal 30% of your base Prayer level instead.",
+          "During that 2.4 second window, all damage you take is reduced to 0.",
+          "The sigil does not deal damage to Yama.",
+          "The Flask has a base cooldown of 3 minutes.",
+          "For every 10 damage you deal in a single hit, the cooldown is reduced by 0.6 seconds.",
+        ],
+        notes: ["The Flask of Fervour can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
       },
     ],
   },
