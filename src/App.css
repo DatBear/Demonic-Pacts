@@ -22,7 +22,7 @@
 	}
 	100% {
 		transform: translate3d(0, -4%, 0) scale(1.2);
-		opacity: 0.78;
+		opacity: 0.7;
 	}
 }
 
@@ -42,14 +42,26 @@
 	}
 }
 
+@keyframes plan-relic-unpop {
+	0% {
+		transform: scale(1.1);
+	}
+  60% {
+    transform: scale(1.2);
+  }
+	100% {
+		transform: scale(1);
+	}
+}
+
 @keyframes plan-relic-settle {
 	0% {
 		transform: scale(1);
-    opacity: 1;
+    opacity: .6;
 	}
 	100% {
 		transform: scale(0.6);
-    opacity: 0.6;
+    opacity: 0.35;
 	}
 }
 
@@ -59,12 +71,17 @@
 }
 
 .plan-relic-node-selected {
-	animation: plan-relic-pop 180ms cubic-bezier(0.22, 1, 0.36, 1);
+	animation: plan-relic-pop 400ms cubic-bezier(0.22, 1, 0.36, 1);
 	transform: scale(1.1);
 }
 
+.plan-relic-node-deselecting {
+	animation: plan-relic-unpop 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	transform: scale(1);
+}
+
 .plan-relic-node-unselected {
-	animation: plan-relic-settle 160ms cubic-bezier(0.4, 0, 0.2, 1);
+	animation: plan-relic-settle 400ms cubic-bezier(0.4, 0, 0.2, 1);
 	transform: scale(0.6);
   opacity: 0.4;
 }

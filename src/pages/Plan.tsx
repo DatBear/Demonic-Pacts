@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Compass, RotateCcw, Swords, WandSparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,12 +15,46 @@ const maxSelectableRegions = 3;
 const maxCombatMasteryPoints = 10;
 const masteryRomanNumerals = ["I", "II", "III", "IV", "V", "VI"];
 const fixedRegionDisplayOrder = ["Varlamore", "Karamja"];
+const relicAnimationDurationMs = 400;
 
 interface DisplayRelicOption {
   code: string;
   name: string;
   tier: number;
   pending: boolean;
+}
+
+interface PlannerBoardRowProps {
+  label: string;
+  children: ReactNode;
+  isLast?: boolean;
+}
+
+interface RegionNodeProps {
+  name: string;
+  badgeImage: string;
+  selected: boolean;
+  blocked: boolean;
+  fixed: boolean;
+  onClick?: () => void;
+}
+
+interface MasteryNodeProps {
+  level: number;
+  selected: boolean;
+  current: boolean;
+  blocked: boolean;
+  onClick: () => void;
+}
+
+interface RelicNodeProps {
+  name: string;
+  imageSrc: string;
+  selected: boolean;
+  deselecting: boolean;
+  pending: boolean;
+  tierHasSelection: boolean;
+  onClick?: () => void;
 }
 
 function getRelicSlotCount(tierNumber: number) {
@@ -49,7 +83,7 @@ function getDisplayRelics(tierNumber: number, relics: Array<{ code: string; name
   return [...relicSlots, ...pendingSlots];
 }
 
-function PlannerBoardRow({ label, children, isLast = false }: { label: string; children: React.ReactNode; isLast?: boolean }) {
+function PlannerBoardRow({ label, children, isLast = false }: PlannerBoardRowProps) {
   return <div className={cn("grid gap-3 px-3 py-4 sm:px-4 md:grid-cols-[11rem_minmax(0,1fr)] md:items-center md:gap-4 md:px-0 md:py-0", !isLast && "border-b border-primary/20")}>
     <div className="flex items-center px-2 md:px-5 md:py-5">
       <p className="text-base font-semibold leading-tight text-foreground sm:text-lg md:text-xl">{label}</p>
@@ -58,21 +92,7 @@ function PlannerBoardRow({ label, children, isLast = false }: { label: string; c
   </div>;
 }
 
-function RegionNode({
-  name,
-  badgeImage,
-  selected,
-  blocked,
-  fixed,
-  onClick,
-}: {
-  name: string;
-  badgeImage: string;
-  selected: boolean;
-  blocked: boolean;
-  fixed: boolean;
-  onClick?: () => void;
-}) {
+function RegionNode({ name, badgeImage, selected, blocked, fixed, onClick, }: RegionNodeProps) {
   const isClickable = onClick !== undefined && !blocked && !fixed;
 
   return <button
@@ -96,19 +116,7 @@ function RegionNode({
   </button>;
 }
 
-function MasteryNode({
-  level,
-  selected,
-  current,
-  blocked,
-  onClick,
-}: {
-  level: number;
-  selected: boolean;
-  current: boolean;
-  blocked: boolean;
-  onClick: () => void;
-}) {
+function MasteryNode({ level, selected, current, blocked, onClick, }: MasteryNodeProps) {
   return <button
     type="button"
     onClick={onClick}
@@ -127,35 +135,24 @@ function MasteryNode({
   </button>;
 }
 
-function RelicNode({
-  name,
-  imageSrc,
-  selected,
-  pending,
-  tierHasSelection,
-  onClick,
-}: {
-  name: string;
-  imageSrc: string;
-  selected: boolean;
-  pending: boolean;
-  tierHasSelection: boolean;
-  onClick?: () => void;
-}) {
+function RelicNode({ name, imageSrc, selected, deselecting, pending, tierHasSelection, onClick }: RelicNodeProps) {
   const isClickable = onClick !== undefined && !pending;
+  const isVisuallySelected = selected || deselecting;
 
   return <button
     type="button"
     onClick={onClick}
     disabled={!isClickable}
-    aria-pressed={selected}
+    aria-pressed={isVisuallySelected}
     className="w-full text-center"
   >
     <div className={cn(
       "plan-relic-node flex min-h-[7.75rem] transform-gpu flex-col items-center justify-center rounded-xl bg-background/60 px-2 py-3 transition-[background-color,opacity,box-shadow] duration-200 sm:min-h-[8.25rem]",
-      selected && "plan-relic-node-selected bg-primary/12 opacity-100 shadow-[0_0_18px_rgba(220,38,38,0.18)]",
-      tierHasSelection && !selected && !pending && "plan-relic-node-unselected opacity-55 hover:bg-background/85 hover:opacity-85",
-      !tierHasSelection && !selected && !pending && "opacity-50 hover:bg-background/85 hover:opacity-100",
+      isVisuallySelected && "bg-primary/12 opacity-100 shadow-[0_0_18px_rgba(220,38,38,0.18)]",
+      selected && "plan-relic-node-selected",
+      deselecting && "plan-relic-node-deselecting",
+      tierHasSelection && !selected && !pending && !deselecting && "plan-relic-node-unselected opacity-55 hover:bg-background/85 hover:opacity-85",
+      !tierHasSelection && !selected && !pending && !deselecting && "opacity-50 hover:bg-background/85 hover:opacity-100",
       pending && "bg-background/45 opacity-35",
       isClickable && "cursor-pointer",
     )}>
@@ -176,6 +173,8 @@ export default function Plan() {
     [CombatStyle.Magic]: 0,
   });
   const [selectedRelicsByTier, setSelectedRelicsByTier] = useState<Record<number, string>>({});
+  const [deselectingRelicsByTier, setDeselectingRelicsByTier] = useState<Record<number, string>>({});
+  const relicDeselectTimeoutsRef = useRef<Record<number, number | undefined>>({});
 
   const totalCombatMasteryPoints = Object.values(selectedMasteryLevels).reduce((sum, level) => sum + level, 0);
 
@@ -201,7 +200,64 @@ export default function Plan() {
     ...plannerRegions.slice().sort((left, right) => left.name.localeCompare(right.name)),
   ];
 
+  useEffect(() => {
+    return () => {
+      Object.values(relicDeselectTimeoutsRef.current).forEach(timeoutId => {
+        if (timeoutId !== undefined) {
+          window.clearTimeout(timeoutId);
+        }
+      });
+    };
+  }, []);
+
+  const clearRelicDeselectAnimation = (tier: number) => {
+    const timeoutId = relicDeselectTimeoutsRef.current[tier];
+
+    if (timeoutId !== undefined) {
+      window.clearTimeout(timeoutId);
+      delete relicDeselectTimeoutsRef.current[tier];
+    }
+
+    setDeselectingRelicsByTier(currentRelics => {
+      if (currentRelics[tier] === undefined) {
+        return currentRelics;
+      }
+
+      const nextRelics = { ...currentRelics };
+      delete nextRelics[tier];
+      return nextRelics;
+    });
+  };
+
+  const startRelicDeselectAnimation = (tier: number, relicCode: string) => {
+    clearRelicDeselectAnimation(tier);
+    setDeselectingRelicsByTier(currentRelics => ({
+      ...currentRelics,
+      [tier]: relicCode,
+    }));
+
+    relicDeselectTimeoutsRef.current[tier] = window.setTimeout(() => {
+      setDeselectingRelicsByTier(currentRelics => {
+        if (currentRelics[tier] !== relicCode) {
+          return currentRelics;
+        }
+
+        const nextRelics = { ...currentRelics };
+        delete nextRelics[tier];
+        return nextRelics;
+      });
+      delete relicDeselectTimeoutsRef.current[tier];
+    }, relicAnimationDurationMs);
+  };
+
   const handleReset = () => {
+    Object.values(relicDeselectTimeoutsRef.current).forEach(timeoutId => {
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+    });
+    relicDeselectTimeoutsRef.current = {};
+    setDeselectingRelicsByTier({});
     setSelectedRegionCodes([]);
     setSelectedMasteryLevels({
       [CombatStyle.Melee]: 0,
@@ -250,13 +306,20 @@ export default function Plan() {
   };
 
   const handleRelicToggle = (tier: number, relicCode: string) => {
-    setSelectedRelicsByTier(currentRelics => {
-      if (currentRelics[tier] === relicCode) {
+    const currentRelicCode = selectedRelicsByTier[tier];
+
+    if (currentRelicCode === relicCode) {
+      startRelicDeselectAnimation(tier, relicCode);
+      setSelectedRelicsByTier(currentRelics => {
         const nextRelics = { ...currentRelics };
         delete nextRelics[tier];
         return nextRelics;
-      }
+      });
+      return;
+    }
 
+    clearRelicDeselectAnimation(tier);
+    setSelectedRelicsByTier(currentRelics => {
       return {
         ...currentRelics,
         [tier]: relicCode,
@@ -368,6 +431,7 @@ export default function Plan() {
                           name={relic.name}
                           imageSrc={relic.pending ? "/relics/Unknown.png" : getRelicImageSrc(relic.tier, relic.name)}
                           selected={!relic.pending && selectedRelicsByTier[tier.tier] === relic.code}
+                          deselecting={!relic.pending && deselectingRelicsByTier[tier.tier] === relic.code}
                           pending={relic.pending}
                           tierHasSelection={tierHasSelection}
                           onClick={!relic.pending ? () => handleRelicToggle(tier.tier, relic.code) : undefined}
