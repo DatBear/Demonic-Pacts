@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 const maxSelectableRegions = 3;
 const maxCombatMasteryPoints = 10;
 const masteryRomanNumerals = ["I", "II", "III", "IV", "V", "VI"];
-const regionDisplayOrder = ["Varlamore", "Karamja", "Asgarnia", "Wilderness", "Fremennik", "Kandarin", "Desert", "Morytania", "Kourend and Kebos", "Tirannwn"];
+const fixedRegionDisplayOrder = ["Varlamore", "Karamja"];
 
 interface DisplayRelicOption {
   code: string;
@@ -85,13 +85,11 @@ function RegionNode({
     <div className={cn(
       "relative flex h-full min-h-[6.6rem] flex-col items-center justify-center rounded-xl bg-background/60 px-2 py-3 transition-all duration-200 sm:min-h-[7.2rem] sm:px-3 sm:py-4",
       selected && "bg-emerald-500/12 opacity-100 shadow-[0_0_24px_rgba(52,211,153,0.22)]",
-      !selected && !blocked && !fixed && "opacity-50 hover:bg-background/85 hover:opacity-100",
+      !selected && !blocked && "opacity-50 hover:bg-background/85 hover:opacity-100",
       blocked && "opacity-20",
-      fixed && "bg-background/45 opacity-55",
       isClickable && "cursor-pointer",
     )}>
       {selected && <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,0.85)]" />}
-      {fixed && <span className="absolute right-1.5 top-1.5 rounded-full bg-background/90 px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:right-2 sm:top-2 sm:px-2">Fixed</span>}
       <img src={badgeImage} alt={`${name} badge`} className="h-9 w-9 shrink-0 object-contain drop-shadow-[0_0_8px_rgba(15,23,42,0.25)] sm:h-10 sm:w-10" />
       <p className="mt-2 text-balance text-xs font-semibold leading-tight text-foreground sm:mt-3 sm:text-sm">{name === "Kourend and Kebos" && "Kourend"}{name !== "Kourend and Kebos" && name}</p>
     </div>
@@ -198,7 +196,10 @@ export default function Plan() {
   };
 
   const regionLookup = Object.fromEntries([...plannerRegions, ...fixedPlannerRegions].map(region => [region.name, region]));
-  const orderedRegions = regionDisplayOrder.map(regionName => regionLookup[regionName]).filter(region => region !== undefined);
+  const orderedRegions = [
+    ...fixedRegionDisplayOrder.map(regionName => regionLookup[regionName]).filter(region => region !== undefined),
+    ...plannerRegions.slice().sort((left, right) => left.name.localeCompare(right.name)),
+  ];
 
   const handleReset = () => {
     setSelectedRegionCodes([]);
@@ -291,18 +292,14 @@ export default function Plan() {
             </div>
           </div>
 
-          <div className="rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-foreground">
-            <span className="text-primary">Plan Board</span> Varlamore and Karamja stay fixed. Everything else toggles directly into the in-memory plan.
-          </div>
-
           <Card className="overflow-hidden border-primary/20 bg-card/95 shadow-[0_24px_80px_rgba(15,23,42,0.35)]">
             <CardContent className="p-0">
               <PlannerBoardRow label="Regions">
                 <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                   {orderedRegions.map(region => {
                     const isFixed = fixedPlannerRegions.some(fixedRegion => fixedRegion.code === region.code);
-                    const isSelected = selectedRegionCodes.includes(region.code);
-                    const isBlocked = !isSelected && !isFixed && selectedRegionCodes.length >= maxSelectableRegions;
+                    const isSelected = isFixed || selectedRegionCodes.includes(region.code);
+                    const isBlocked = !isSelected && selectedRegionCodes.length >= maxSelectableRegions;
 
                     return <RegionNode
                       key={region.code}
@@ -383,10 +380,10 @@ export default function Plan() {
             </CardContent>
           </Card>
 
-          <div className="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-            <div className="rounded-full border border-border bg-background/70 px-3 py-2">Up to 3 flexible regions</div>
-            <div className="rounded-full border border-border bg-background/70 px-3 py-2">Up to 10 mastery points</div>
-            <div className="rounded-full border border-border bg-background/70 px-3 py-2">1 relic per revealed tier</div>
+          <div className="flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground items-center justify-center">
+            <div className="rounded-full border border-border bg-background/70 px-3 py-2">Up to 3 regions</div>
+            <div className="rounded-full border border-border bg-background/70 px-3 py-2">Up to 10 combat mastery points</div>
+            <div className="rounded-full border border-border bg-background/70 px-3 py-2">1 relic per tier</div>
           </div>
         </div>
       </main>
