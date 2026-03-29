@@ -25,6 +25,7 @@ export interface RelicData {
   name: string;
   summary: string;
   toggleableEffect?: string;
+  toggleableEffects?: string[];
   activeEffects: string[];
   notes: string[];
 }
@@ -816,8 +817,28 @@ export const relicTiers: RelicTierData[] = [
     tier: 2,
     title: "Tier 2",
     passiveEffects: ["XP multiplier increases from 5x to 8x."],
-    status: "Tier 2 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 2 relic Woodsman has been revealed.",
+    relics: [
+      {
+        name: "Woodsman",
+        summary: "A gathering relic focused on Woodcutting, Fletching, and Hunter, with guaranteed catches, faster traps, and automated log burning.",
+        toggleableEffects: [
+          "Hunter traps harvest directly to your bank.",
+          "Logs chopped will be automatically burned.",
+        ],
+        activeEffects: [
+          "All items are processed at once while Fletching. Stackable Fletching items are capped at 10x the regular amount per action.",
+          "Chopped logs are automatically burned while Woodcutting, granting full Firemaking XP. This effect can be toggled above.",
+          "Hunter actions have a 100% success rate.",
+          "Traps attract animals faster and give double loot and XP.",
+          "Traps always drop a random herb seed or tree seed when harvested.",
+          "Hunter rumours give double XP and Hunters' loot sacks award 2x as much loot.",
+          "All loot from jarred implings is doubled and noted, and the jars no longer break when opened.",
+          "Quetzal whistles no longer lose charges.",
+        ],
+        notes: [],
+      },
+    ],
   },
   {
     tier: 3,
@@ -852,8 +873,27 @@ export const relicTiers: RelicTierData[] = [
       "Eligible item drops increase from 2x to 5x as common.",
       "Minigame point boosts increase from 4x to 8x.",
     ],
-    status: "Tier 4 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 4 relic Conniving Clues has been revealed.",
+    relics: [
+      {
+        name: "Conniving Clues",
+        summary: "A clue-focused relic that generates teleport contracts from caskets, improves clue source rates, and compresses every clue down to its shortest possible route.",
+        activeEffects: [
+          "When opening a Reward casket, you have a 1/3 chance to receive Clue contracts which can be consumed to teleport to your current clue step.",
+          "Beginner clues give 0-2 contracts at a time.",
+          "Easy clues give 1-4 contracts at a time.",
+          "Medium clues give 1-5 contracts at a time.",
+          "Hard clues give 1-7 contracts at a time.",
+          "Elite clues give 1-9 contracts at a time.",
+          "Master clues give 1-10 contracts at a time.",
+          "Reward caskets also have a 1/4 chance to contain a clue scroll box of the same tier.",
+          "Clues from creatures and impling jars now have a drop rate of 1/15.",
+          "Clue vessels obtained from skilling, such as clue geodes and clue nests, are 10x more likely to drop.",
+          "All clues have the lowest possible number of steps and will give the maximum amount of reward rolls.",
+        ],
+        notes: [],
+      },
+    ],
   },
   {
     tier: 5,
@@ -896,7 +936,7 @@ export const relicTiers: RelicTierData[] = [
     tier: 8,
     title: "Tier 8",
     passiveEffects: ["No passive effect has been announced yet."],
-    status: "The Tier 8 relic Minion has been revealed.",
+    status: "The Tier 8 relics Minion and Flask of Fervour have been revealed.",
     relics: [
       {
         name: "Minion",
@@ -914,6 +954,23 @@ export const relicTiers: RelicTierData[] = [
           "The Minion does not fight in PvP and does not fight against Yama.",
         ],
         notes: ["The Minion whistle can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+      },
+      {
+        name: "Flask of Fervour",
+        summary: "A panic-button combat relic that grants the Flask of Fervour, restoring your core combat resources before triggering a brief invulnerability window and Prayer-scaled explosions around you.",
+        toggleableEffect: "Upon choosing this relic, you receive the Flask of Fervour.",
+        activeEffects: [
+          "When the Flask is consumed, your Hitpoints are restored to full.",
+          "When the Flask is consumed, your Prayer points are restored to full.",
+          "When the Flask is consumed, your special attack energy is restored to full.",
+          "Over the next 2.4 seconds, the sigil triggers three explosions which deal 60% of your base Prayer level as typeless damage to all enemies within 3 tiles of you.",
+          "In PvP, those explosions deal 30% of your base Prayer level instead.",
+          "During that 2.4 second window, all damage you take is reduced to 0.",
+          "The sigil does not deal damage to Yama.",
+          "The Flask has a base cooldown of 3 minutes.",
+          "For every 10 damage you deal in a single hit, the cooldown is reduced by 0.6 seconds.",
+        ],
+        notes: ["The Flask of Fervour can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
       },
     ],
   },

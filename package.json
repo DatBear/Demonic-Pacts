@@ -20,9 +20,9 @@
     "build": "tsc -b && vite build",
     "data:raging-echoes": "node scripts/generate-raging-echoes-data.mjs",
     "lint": "eslint .",
-    "relic:image:t6": "node scripts/process-relic-image.mjs",
+    "relic:image": "node scripts/process-relic-image.mjs",
     "skills:download": "node scripts/download-skill-icons.mjs",
-    "preview": "vite preview"
+ 	"preview": "vite preview"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
