@@ -70,6 +70,13 @@ export default function Home() {
                 </Button>
               </Link>
 
+              <Link to="/plan">
+                <Button size="lg" variant="outline" className="gap-2 border-primary/30 bg-background/70 text-foreground hover:bg-primary/10">
+                  <BookOpen className="h-5 w-5 text-primary" />
+                  Open Planner
+                </Button>
+              </Link>
+
               <Link to="/info#regions">
                 <Button size="lg" variant="outline" className="gap-2 border-primary/30 bg-background/70 text-foreground hover:bg-primary/10">
                   <Compass className="h-5 w-5 text-primary" />
@@ -146,6 +153,14 @@ export default function Home() {
                   <Flame className="mb-3 h-5 w-5 text-primary" />
                   <p className="font-semibold">Relic Tracker</p>
                   <p className="mt-2 text-sm text-muted-foreground">Tier 1, Tier 6, and Tier 8 relics have been revealed. <br />Check back there as Jagex reveals the details for the remaining tiers!</p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
+                <CardContent className="p-5">
+                  <BookOpen className="mb-3 h-5 w-5 text-primary" />
+                  <p className="font-semibold">Plan Builder</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Pick your flexible regions, spend combat mastery points, and lock in revealed relics in the new Demonic Pacts planner.</p>
                 </CardContent>
               </Card>
             </div>

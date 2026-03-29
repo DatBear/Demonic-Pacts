@@ -6,4 +6,6 @@ type CombatMastery = {
   style: CombatStyle;
   level: number;
   description: string;
-}
+};
+
+export default CombatMastery;
