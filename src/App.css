@@ -17,15 +17,54 @@
 		opacity: 0.7;
 	}
 	50% {
-		transform: translate3d(0, -2%, 0) scale(1.02);
+		transform: translate3d(0, -2%, 0) scale(1.1);
 		opacity: 1;
 	}
 	100% {
-		transform: translate3d(0, -4%, 0) scale(1.04);
+		transform: translate3d(0, -4%, 0) scale(1.2);
 		opacity: 0.78;
 	}
 }
 
 .league-embers {
 	animation: league-embers 8s ease-in-out infinite alternate;
+}
+
+@keyframes plan-relic-pop {
+	0% {
+		transform: scale(1);
+	}
+	60% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1.1);
+	}
+}
+
+@keyframes plan-relic-settle {
+	0% {
+		transform: scale(1);
+    opacity: 1;
+	}
+	100% {
+		transform: scale(0.6);
+    opacity: 0.6;
+	}
+}
+
+.plan-relic-node {
+	transform: scale(1);
+	will-change: transform, opacity;
+}
+
+.plan-relic-node-selected {
+	animation: plan-relic-pop 180ms cubic-bezier(0.22, 1, 0.36, 1);
+	transform: scale(1.1);
+}
+
+.plan-relic-node-unselected {
+	animation: plan-relic-settle 160ms cubic-bezier(0.4, 0, 0.2, 1);
+	transform: scale(0.6);
+  opacity: 0.4;
 }

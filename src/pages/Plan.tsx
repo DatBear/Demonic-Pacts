@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Compass, Gem, RotateCcw, Swords, WandSparkles } from "lucide-react";
+import { Compass, RotateCcw, Swords, WandSparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type PlanModel from "@/data/model/plan/Plan";
@@ -16,9 +16,42 @@ const maxCombatMasteryPoints = 10;
 const masteryRomanNumerals = ["I", "II", "III", "IV", "V", "VI"];
 const regionDisplayOrder = ["Varlamore", "Karamja", "Asgarnia", "Wilderness", "Fremennik", "Kandarin", "Desert", "Morytania", "Kourend and Kebos", "Tirannwn"];
 
+interface DisplayRelicOption {
+  code: string;
+  name: string;
+  tier: number;
+  pending: boolean;
+}
+
+function getRelicSlotCount(tierNumber: number) {
+  if (tierNumber === 7) {
+    return 2;
+  }
+
+  return 3;
+}
+
+function getDisplayRelics(tierNumber: number, relics: Array<{ code: string; name: string; tier: number }>): DisplayRelicOption[] {
+  const relicSlots = relics.map(relic => ({
+    code: relic.code,
+    name: relic.name,
+    tier: relic.tier,
+    pending: false,
+  }));
+  const slotCount = Math.max(getRelicSlotCount(tierNumber), relicSlots.length);
+  const pendingSlots = Array.from({ length: slotCount - relicSlots.length }, (_, idx) => ({
+    code: `T${tierNumber}_PENDING_${idx + 1}`,
+    name: "?",
+    tier: tierNumber,
+    pending: true,
+  }));
+
+  return [...relicSlots, ...pendingSlots];
+}
+
 function PlannerBoardRow({ label, children, isLast = false }: { label: string; children: React.ReactNode; isLast?: boolean }) {
-  return <div className={cn("grid gap-3 px-3 py-4 sm:px-4 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-0 md:px-0 md:py-0", !isLast && "border-b border-primary/20")}>
-    <div className="px-2 pt-1 md:border-r md:border-primary/20 md:bg-background/40 md:px-5 md:py-5">
+  return <div className={cn("grid gap-3 px-3 py-4 sm:px-4 md:grid-cols-[11rem_minmax(0,1fr)] md:items-center md:gap-4 md:px-0 md:py-0", !isLast && "border-b border-primary/20")}>
+    <div className="flex items-center px-2 md:px-5 md:py-5">
       <p className="text-base font-semibold leading-tight text-foreground sm:text-lg md:text-xl">{label}</p>
     </div>
     <div className="min-w-0 px-1 pb-1 md:px-5 md:py-5">{children}</div>
@@ -50,15 +83,15 @@ function RegionNode({
     className="w-[5.4rem] text-center sm:w-[6.1rem]"
   >
     <div className={cn(
-      "relative flex h-full min-h-[6.6rem] flex-col items-center justify-center rounded-xl border bg-background/70 px-2 py-3 transition-all duration-200 sm:min-h-[7.2rem] sm:px-3 sm:py-4",
-      selected && "border-primary/50 bg-primary/10 opacity-100 shadow-[0_0_18px_rgba(220,38,38,0.18)]",
-      !selected && !blocked && !fixed && "border-primary/20 opacity-45 hover:border-primary/40 hover:opacity-100",
-      blocked && "border-border opacity-20",
-      fixed && "border-primary/20 opacity-35",
+      "relative flex h-full min-h-[6.6rem] flex-col items-center justify-center rounded-xl bg-background/60 px-2 py-3 transition-all duration-200 sm:min-h-[7.2rem] sm:px-3 sm:py-4",
+      selected && "bg-emerald-500/12 opacity-100 shadow-[0_0_24px_rgba(52,211,153,0.22)]",
+      !selected && !blocked && !fixed && "opacity-50 hover:bg-background/85 hover:opacity-100",
+      blocked && "opacity-20",
+      fixed && "bg-background/45 opacity-55",
       isClickable && "cursor-pointer",
     )}>
-      {selected && <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_10px_rgba(220,38,38,0.8)]" />}
-      {fixed && <span className="absolute right-1.5 top-1.5 rounded-full border border-primary/20 bg-background/90 px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:right-2 sm:top-2 sm:px-2">Fixed</span>}
+      {selected && <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,0.85)]" />}
+      {fixed && <span className="absolute right-1.5 top-1.5 rounded-full bg-background/90 px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:right-2 sm:top-2 sm:px-2">Fixed</span>}
       <img src={badgeImage} alt={`${name} badge`} className="h-9 w-9 shrink-0 object-contain drop-shadow-[0_0_8px_rgba(15,23,42,0.25)] sm:h-10 sm:w-10" />
       <p className="mt-2 text-balance text-xs font-semibold leading-tight text-foreground sm:mt-3 sm:text-sm">{name === "Kourend and Kebos" && "Kourend"}{name !== "Kourend and Kebos" && name}</p>
     </div>
@@ -66,15 +99,15 @@ function RegionNode({
 }
 
 function MasteryNode({
-  label,
   level,
   selected,
+  current,
   blocked,
   onClick,
 }: {
-  label: string;
   level: number;
   selected: boolean;
+  current: boolean;
   blocked: boolean;
   onClick: () => void;
 }) {
@@ -84,31 +117,34 @@ function MasteryNode({
     disabled={blocked}
     aria-pressed={selected}
     className={cn(
-      "flex min-h-[4rem] flex-col items-center justify-center rounded-xl border px-2 py-3 text-center transition-all duration-200",
-      selected && "border-primary/50 bg-primary/10 opacity-100 shadow-[0_0_18px_rgba(220,38,38,0.18)]",
-      !selected && !blocked && "border-primary/20 bg-background/70 opacity-45 hover:border-primary/40 hover:opacity-100",
-      blocked && "border-border bg-background/50 opacity-20",
+      "relative flex min-h-[4rem] flex-col items-center justify-center rounded-xl px-2 py-3 text-center transition-all duration-200",
+      selected && "bg-primary/12 opacity-100 shadow-[0_0_18px_rgba(220,38,38,0.18)]",
+      current && "-translate-y-0.5 bg-primary/22 shadow-[0_0_28px_rgba(220,38,38,0.28)]",
+      !selected && !blocked && "bg-background/60 opacity-45 hover:bg-background/85 hover:opacity-100",
+      blocked && "bg-background/40 opacity-20",
     )}
   >
-    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
-    <span className="mt-1 text-lg font-black text-foreground">{masteryRomanNumerals[level - 1]}</span>
+    {selected && <span className={cn("absolute inset-x-2 bottom-1 h-1 rounded-full bg-primary/35", current && "bg-primary")} />}
+    <span className={cn("text-lg font-black text-foreground", current && "text-primary")}>{masteryRomanNumerals[level - 1]}</span>
   </button>;
 }
 
 function RelicNode({
-  tier,
   name,
+  imageSrc,
   selected,
-  blocked,
+  pending,
+  tierHasSelection,
   onClick,
 }: {
-  tier: number;
   name: string;
+  imageSrc: string;
   selected: boolean;
-  blocked: boolean;
+  pending: boolean;
+  tierHasSelection: boolean;
   onClick?: () => void;
 }) {
-  const isClickable = onClick !== undefined && !blocked;
+  const isClickable = onClick !== undefined && !pending;
 
   return <button
     type="button"
@@ -118,13 +154,15 @@ function RelicNode({
     className="w-full text-center"
   >
     <div className={cn(
-      "flex min-h-[7.75rem] flex-col items-center justify-center rounded-xl border bg-background/70 px-2 py-3 transition-all duration-200 sm:min-h-[8.25rem]",
-      selected && "border-primary/50 bg-primary/10 opacity-100 shadow-[0_0_18px_rgba(220,38,38,0.18)]",
-      !selected && !blocked && "border-primary/20 opacity-45 hover:border-primary/40 hover:opacity-100",
-      blocked && "border-border opacity-20",
+      "plan-relic-node flex min-h-[7.75rem] transform-gpu flex-col items-center justify-center rounded-xl bg-background/60 px-2 py-3 transition-[background-color,opacity,box-shadow] duration-200 sm:min-h-[8.25rem]",
+      selected && "plan-relic-node-selected bg-primary/12 opacity-100 shadow-[0_0_18px_rgba(220,38,38,0.18)]",
+      tierHasSelection && !selected && !pending && "plan-relic-node-unselected opacity-55 hover:bg-background/85 hover:opacity-85",
+      !tierHasSelection && !selected && !pending && "opacity-50 hover:bg-background/85 hover:opacity-100",
+      pending && "bg-background/45 opacity-35",
       isClickable && "cursor-pointer",
     )}>
-      <img src={getRelicImageSrc(tier, name)} alt={`${name} relic icon`} className="h-[48px] w-[48px] shrink-0 sm:h-[52px] sm:w-[52px]" onError={event => {
+      {pending && <span className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Pending</span>}
+      <img src={imageSrc} alt={pending ? "Pending relic icon" : `${name} relic icon`} className="h-[48px] w-[48px] shrink-0 sm:h-[52px] sm:w-[52px]" onError={event => {
         event.currentTarget.src = "/relics/Unknown.png";
       }} />
       <p className="mt-2 text-balance text-sm font-black leading-tight text-foreground sm:text-[0.95rem]">{name}</p>
@@ -260,83 +298,86 @@ export default function Plan() {
           <Card className="overflow-hidden border-primary/20 bg-card/95 shadow-[0_24px_80px_rgba(15,23,42,0.35)]">
             <CardContent className="p-0">
               <PlannerBoardRow label="Regions">
-                <div className="flex flex-wrap items-start gap-3 sm:gap-4">
-                {orderedRegions.map(region => {
-                  const isFixed = fixedPlannerRegions.some(fixedRegion => fixedRegion.code === region.code);
-                  const isSelected = selectedRegionCodes.includes(region.code);
-                  const isBlocked = !isSelected && !isFixed && selectedRegionCodes.length >= maxSelectableRegions;
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                  {orderedRegions.map(region => {
+                    const isFixed = fixedPlannerRegions.some(fixedRegion => fixedRegion.code === region.code);
+                    const isSelected = selectedRegionCodes.includes(region.code);
+                    const isBlocked = !isSelected && !isFixed && selectedRegionCodes.length >= maxSelectableRegions;
 
-                  return <RegionNode
-                    key={region.code}
-                    name={region.name}
-                    badgeImage={region.badgeImage}
-                    selected={isSelected}
-                    blocked={isBlocked}
-                    fixed={isFixed}
-                    onClick={!isFixed ? () => handleRegionToggle(region.code) : undefined}
-                  />;
-                })}
+                    return <RegionNode
+                      key={region.code}
+                      name={region.name}
+                      badgeImage={region.badgeImage}
+                      selected={isSelected}
+                      blocked={isBlocked}
+                      fixed={isFixed}
+                      onClick={!isFixed ? () => handleRegionToggle(region.code) : undefined}
+                    />;
+                  })}
                 </div>
               </PlannerBoardRow>
 
               <PlannerBoardRow label="Combat Masteries">
                 <div className="grid gap-4 lg:grid-cols-3 lg:gap-5">
-                {combatStyles.map(style => {
-                  const styleMetadata = combatStyleMetadata[style];
-                  const currentLevel = selectedMasteryLevels[style];
-                  const styleMasteries = plannerCombatMasteries.filter(mastery => mastery.style === style);
-                  const styleShortLabel = styleMetadata.label === "Ranged" ? "Rng" : styleMetadata.label === "Magic" ? "Mag" : "Melee";
+                  {combatStyles.map(style => {
+                    const styleMetadata = combatStyleMetadata[style];
+                    const currentLevel = selectedMasteryLevels[style];
+                    const styleMasteries = plannerCombatMasteries.filter(mastery => mastery.style === style);
 
-                  return <div key={style} className="space-y-3 rounded-2xl border border-primary/20 bg-background/35 p-3 sm:p-4">
-                    <div className="flex items-center justify-center gap-2 text-center text-lg font-semibold text-foreground sm:text-xl">
-                      {style === CombatStyle.Melee && <Swords className={cn("h-5 w-5", styleMetadata.accentClassName)} />}
-                      {style === CombatStyle.Ranged && <Compass className={cn("h-5 w-5", styleMetadata.accentClassName)} />}
-                      {style === CombatStyle.Magic && <WandSparkles className={cn("h-5 w-5", styleMetadata.accentClassName)} />}
-                      <span>{styleMetadata.label}</span>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-                      {styleMasteries.map(mastery => {
-                        const isSelected = mastery.level === currentLevel;
-                        const pointsWithoutStyle = totalCombatMasteryPoints - currentLevel;
-                        const isBlocked = !isSelected && pointsWithoutStyle + mastery.level > maxCombatMasteryPoints;
+                    return <div key={style} className="space-y-3 rounded-2xl bg-background/35 p-3 sm:p-4">
+                      <div className="flex items-center justify-center gap-2 text-center text-lg font-semibold text-foreground sm:text-xl">
+                        {style === CombatStyle.Melee && <Swords className={cn("h-5 w-5", styleMetadata.accentClassName)} />}
+                        {style === CombatStyle.Ranged && <Compass className={cn("h-5 w-5", styleMetadata.accentClassName)} />}
+                        {style === CombatStyle.Magic && <WandSparkles className={cn("h-5 w-5", styleMetadata.accentClassName)} />}
+                        <span>{styleMetadata.label}</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+                        {styleMasteries.map(mastery => {
+                          const isSelected = mastery.level <= currentLevel;
+                          const isCurrent = mastery.level === currentLevel;
+                          const pointsWithoutStyle = totalCombatMasteryPoints - currentLevel;
+                          const isBlocked = !isSelected && pointsWithoutStyle + mastery.level > maxCombatMasteryPoints;
 
-                        return <MasteryNode
-                          key={mastery.name}
-                          label={styleShortLabel}
-                          level={mastery.level}
-                          selected={isSelected}
-                          blocked={isBlocked}
-                          onClick={() => handleMasteryToggle(style, mastery.level)}
-                        />;
-                      })}
-                    </div>
-                  </div>;
-                })}
+                          return <MasteryNode
+                            key={mastery.name}
+                            level={mastery.level}
+                            selected={isSelected}
+                            current={isCurrent}
+                            blocked={isBlocked}
+                            onClick={() => handleMasteryToggle(style, mastery.level)}
+                          />;
+                        })}
+                      </div>
+                    </div>;
+                  })}
                 </div>
               </PlannerBoardRow>
 
               <PlannerBoardRow label="Relics" isLast>
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                  {plannerRelicTiers.map(tier => <div key={tier.tier} className="relative rounded-2xl border border-primary/20 px-3 pb-3 pt-6 sm:px-4">
-                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 bg-background px-3 py-1 text-sm font-semibold text-foreground">
-                      Tier {tier.tier}
-                    </div>
+                  {plannerRelicTiers.map(tier => {
+                    const relicSlots = getDisplayRelics(tier.tier, tier.relics);
+                    const tierHasSelection = selectedRelicsByTier[tier.tier] !== undefined;
+                    const gridClassName = relicSlots.length === 2 ? "grid grid-cols-2 gap-3" : "grid grid-cols-2 gap-3 sm:grid-cols-3";
 
-                    {!tier.isSelectable && <div className="flex min-h-[7.75rem] items-center justify-center rounded-xl border border-dashed border-primary/20 bg-background/60 px-3 py-4 text-center text-sm font-semibold text-muted-foreground opacity-45 sm:min-h-[8.25rem]">
-                      Pending
-                    </div>}
+                    return <div key={tier.tier} className="relative rounded-2xl border border-primary/20 bg-background/35 px-3 pb-3 pt-6 sm:px-4">
+                      <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-background px-3 py-1 text-sm font-semibold text-foreground shadow-[0_10px_30px_rgba(15,23,42,0.28)]">
+                        Tier {tier.tier}
+                      </div>
 
-                    {tier.isSelectable && <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                      {tier.relics.map(relic => <RelicNode
-                        key={relic.code}
-                        tier={tier.tier}
-                        name={relic.name}
-                        selected={selectedRelicsByTier[tier.tier] === relic.code}
-                        blocked={false}
-                        onClick={() => handleRelicToggle(tier.tier, relic.code)}
-                      />)}
-                    </div>}
-                  </div>)}
+                      <div className={gridClassName}>
+                        {relicSlots.map(relic => <RelicNode
+                          key={relic.code}
+                          name={relic.name}
+                          imageSrc={relic.pending ? "/relics/Unknown.png" : getRelicImageSrc(relic.tier, relic.name)}
+                          selected={!relic.pending && selectedRelicsByTier[tier.tier] === relic.code}
+                          pending={relic.pending}
+                          tierHasSelection={tierHasSelection}
+                          onClick={!relic.pending ? () => handleRelicToggle(tier.tier, relic.code) : undefined}
+                        />)}
+                      </div>
+                    </div>;
+                  })}
                 </div>
               </PlannerBoardRow>
             </CardContent>
