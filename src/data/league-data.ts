@@ -8,6 +8,19 @@ export interface LeagueSectionGroup {
   items: string[];
 }
 
+export interface EchoBossReveal {
+  regionSlug: "varlamore" | "kandarin" | "kourend-kebos" | "fremennik";
+  regionName: string;
+  bossName: string;
+  bossWikiUrl: string;
+  revealUrl?: string;
+  knownDrops: {
+    name: string;
+    description?: string;
+    url?: string;
+  }[];
+}
+
 export interface RegionData {
   slug: string;
   name: string;
@@ -167,6 +180,54 @@ export const yamasLairNotes: string[] = [
   "After the tutorial, the lair remains accessible and acts as a reusable early-game utility hub.",
   "A new stepping-stones agility course lets you train Agility from level 1 at roughly Draynor Rooftop pace, with a more punishing failure pattern.",
   "Casting Home Teleport returns you to Yama's Lair at any point during the league.",
+];
+
+export const echoBossReveals: EchoBossReveal[] = [
+  {
+    regionSlug: "varlamore",
+    regionName: "Varlamore",
+    bossName: "Amoxliatl",
+    bossWikiUrl: "https://oldschool.runescape.wiki/w/Amoxliatl_(Echo)",
+    knownDrops: [],
+  },
+  {
+    regionSlug: "kandarin",
+    regionName: "Kandarin",
+    bossName: "Thermonuclear Smoke Devil",
+    bossWikiUrl: "https://oldschool.runescape.wiki/w/Thermonuclear_smoke_devil_(Echo)",
+    revealUrl: "https://x.com/OldSchoolRS/status/2037953009183826030",
+    knownDrops: [
+      {
+        name: "Devil's Element",
+        description: "A four-pronged main hand teased alongside a recognizable off-hand echo magic item.",
+        url: "https://oldschool.runescape.wiki/w/Devil%27s_element",
+      },
+    ],
+  },
+  {
+    regionSlug: "kourend-kebos",
+    regionName: "Kourend",
+    bossName: "Hespori",
+    bossWikiUrl: "https://oldschool.runescape.wiki/w/Hespori_(Echo)",
+    revealUrl: "https://x.com/OldSchoolRS/status/2038300320980140385",
+    knownDrops: [
+      {
+        name: "A new short bow forged from tangled roots",
+      },
+    ],
+  },
+  {
+    regionSlug: "fremennik",
+    regionName: "Fremennik",
+    bossName: "Dagannoth Kings",
+    bossWikiUrl: "https://oldschool.runescape.wiki/w/Dagannoth_Kings_(Echo)",
+    revealUrl: "https://x.com/OldSchoolRS/status/2038662854140703009",
+    knownDrops: [
+      {
+        name: "A new best-in-slot Viking helmet",
+      },
+    ],
+  },
 ];
 
 export const varlamoreGroups: LeagueSectionGroup[] = [
