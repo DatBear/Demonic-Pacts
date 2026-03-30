@@ -899,8 +899,26 @@ export const relicTiers: RelicTierData[] = [
     tier: 5,
     title: "Tier 5",
     passiveEffects: ["XP multiplier increases from 8x to 12x."],
-    status: "Tier 5 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 5 relic Nature's Accord has been revealed.",
+    relics: [
+      {
+        name: "Nature's Accord",
+        summary: "A farming and travel relic that grants the Fairy mushroom, removing patch level requirements, massively increasing yields, and opening direct teleports to every Fairy Ring, Spirit Tree, and tool leprechaun.",
+        toggleableEffect: "Upon choosing this relic, you receive the Fairy mushroom.",
+        activeEffects: [
+          "Farming patches and plants no longer have any level requirements to harvest, plant, or make.",
+          "You receive 10x yield from all farming patches and it is automatically noted.",
+          "XP is granted for all additional resources gathered.",
+          "Your plants never die.",
+          "You have a 20% chance to not use a seed or sapling when planting crops in patches.",
+          "The Fairy mushroom lets you teleport to any Fairy Ring, Spirit Tree, or tool leprechaun.",
+          "Unlocking this relic auto-completes Tree Gnome Village.",
+          "The Fairy mushroom ignores Wilderness teleport restrictions.",
+          "The Fairy mushroom cannot teleport you to an area you have not unlocked.",
+        ],
+        notes: ["The Fairy mushroom can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+      },
+    ],
   },
   {
     tier: 6,
