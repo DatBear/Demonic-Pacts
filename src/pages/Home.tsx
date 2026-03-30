@@ -70,12 +70,12 @@ export default function Home() {
                 </Button>
               </Link>
 
-              <Link to="/plan">
+              {/* <Link to="/plan">
                 <Button size="lg" variant="outline" className="gap-2 border-primary/30 bg-background/70 text-foreground hover:bg-primary/10">
                   <BookOpen className="h-5 w-5 text-primary" />
                   Open Planner
                 </Button>
-              </Link>
+              </Link> */}
 
               <Link to="/info#regions">
                 <Button size="lg" variant="outline" className="gap-2 border-primary/30 bg-background/70 text-foreground hover:bg-primary/10">

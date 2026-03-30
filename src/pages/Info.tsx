@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Calendar, Clock3, Compass, Crown, Flame, Gem, Leaf, LockOpen, MapPinned, ScrollText, Shield, Skull, Sparkles, Sprout, Users } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, Clock3, Compass, Flame, Gem, LockOpen, MapPinned, ScrollText, Skull, Sparkles, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LeaguePageFrame } from "@/components/LeaguePageFrame";
@@ -31,26 +31,34 @@ export default function Info() {
   const startingCombatAchievementsGroup = initialSetupGroups[1];
   const startingStatsGroup = initialSetupGroups[2];
   const starterUtilityGroup = initialSetupGroups[3];
+  const regionBadgePaths = {
+    asgarnia: "/regions/badge/Asgarnia.png",
+    desert: "/regions/badge/Desert.png",
+    fremennik: "/regions/badge/Fremennik.png",
+    kandarin: "/regions/badge/Kandarin.png",
+    karamja: "/regions/badge/Karamja.png",
+    "kourend-kebos": "/regions/badge/Kourend.png",
+    morytania: "/regions/badge/Morytania.png",
+    tirannwn: "/regions/badge/Tirannwn.png",
+    varlamore: "/regions/badge/Varlamore.png",
+    wilderness: "/regions/badge/Wilderness.png",
+  } as const;
   const echoBossRegionVisuals = {
     varlamore: {
-      icon: Crown,
       glowClassName: "from-amber-400/25 via-orange-400/10 to-transparent",
-      sigilClassName: "border-amber-300/30 bg-amber-400/10 text-amber-100",
+      sigilClassName: "bg-amber-400/10 text-amber-100",
     },
     kandarin: {
-      icon: Leaf,
       glowClassName: "from-emerald-400/25 via-lime-400/10 to-transparent",
-      sigilClassName: "border-emerald-300/30 bg-emerald-400/10 text-emerald-100",
+      sigilClassName: "bg-emerald-400/10 text-emerald-100",
     },
     "kourend-kebos": {
-      icon: Sprout,
       glowClassName: "from-cyan-400/25 via-sky-400/10 to-transparent",
-      sigilClassName: "border-cyan-300/30 bg-cyan-400/10 text-cyan-100",
+      sigilClassName: "bg-cyan-400/10 text-cyan-100",
     },
     fremennik: {
-      icon: Shield,
       glowClassName: "from-slate-200/25 via-sky-200/10 to-transparent",
-      sigilClassName: "border-slate-300/30 bg-slate-200/10 text-slate-100",
+      sigilClassName: "bg-slate-200/10 text-slate-100",
     },
   } as const;
 
@@ -59,9 +67,8 @@ export default function Info() {
     title="Demonic Pacts"
     description="Updated from the March 23 official roundup: the revised start, Varlamore opening route, league-wide rule changes, unlockable region references, and the first revealed relic tier."
     actions={<>
-      <Link to="/plan"><Button>Planner</Button></Link>
+      {/* <Link to="/plan"><Button>Planner</Button></Link> */}
       <a href="#regions"><Button variant="outline">Unlockable Regions</Button></a>
-      <Link to="/tasks"><Button variant="outline">Task Tracker</Button></Link>
       <Link to="/relics"><Button variant="outline">Relics</Button></Link>
       <a href="https://secure.runescape.com/m=news/get-ready-for-leagues-vi-demonic-pacts---april-15th?oldschool=1" target="_blank" rel="noopener noreferrer"><Button variant="outline">Official Post</Button></a>
     </>}
@@ -172,15 +179,17 @@ export default function Info() {
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {echoBossReveals.map(reveal => {
               const visual = echoBossRegionVisuals[reveal.regionSlug];
-              const Icon = visual.icon;
+              const badgeSrc = regionBadgePaths[reveal.regionSlug] ?? "/regions/badge/General.png";
               const hasKnownDrops = reveal.knownDrops.length > 0;
 
               return <Card key={reveal.regionSlug} className="group relative overflow-hidden border-primary/20 bg-card/90">
                 <div className={`pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-br ${visual.glowClassName}`} />
                 <CardContent className="relative flex h-full flex-col gap-5 p-5">
                   <div className="flex items-center gap-3">
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${visual.sigilClassName}`}>
-                      <Icon className="h-5 w-5" />
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${visual.sigilClassName}`}>
+                      <img src={badgeSrc} alt={`${reveal.regionName} badge`} className="h-8 w-8 object-contain" onError={x => {
+                        x.currentTarget.src = "/regions/badge/General.png";
+                      }} />
                     </div>
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">Region</p>
@@ -229,8 +238,17 @@ export default function Info() {
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {unlockableRegions.map(region => <Card key={region.slug} className="h-full border-primary/20 bg-gradient-to-br from-card to-primary/5 transition-colors hover:border-primary/40">
               <CardContent className="flex h-full flex-col p-5">
-                <div>
-                  <p className="truncate text-sm font-semibold uppercase tracking-[0.24em] text-primary">{region.name}</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-background/70">
+                    <img src={regionBadgePaths[region.slug as keyof typeof regionBadgePaths] ?? "/regions/badge/General.png"} alt={`${region.name} badge`} className="h-8 w-8 object-contain" onError={x => {
+                      x.currentTarget.src = "/regions/badge/General.png";
+                    }} />
+                  </div>
+                  <div>
+                    <p className="truncate text-sm font-semibold uppercase tracking-[0.24em] text-primary">{region.name}</p>
+                  </div>
+                </div>
+                <div className="mt-2">
                   <p className="mt-2 text-lg font-semibold leading-tight">{region.strapline}</p>
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground">{region.summary}</p>
