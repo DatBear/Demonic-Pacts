@@ -9,7 +9,7 @@ export interface LeagueSectionGroup {
 }
 
 export interface EchoBossReveal {
-  regionSlug: "varlamore" | "kandarin" | "kourend-kebos" | "fremennik";
+  regionSlug: "varlamore" | "kandarin" | "kourend-kebos" | "fremennik" | "wilderness";
   regionName: string;
   bossName: string;
   bossWikiUrl: string;
@@ -225,6 +225,18 @@ export const echoBossReveals: EchoBossReveal[] = [
     knownDrops: [
       {
         name: "A new best-in-slot Viking helmet",
+      },
+    ],
+  },
+  {
+    regionSlug: "wilderness",
+    regionName: "Wilderness",
+    bossName: "King Black Dragon",
+    bossWikiUrl: "https://oldschool.runescape.wiki/w/King_Black_Dragon_(Echo)",
+    knownDrops: [
+      {
+        name: "A new echo crossbow",
+        description: "Double-hits and applies Ice Barrage-like effects.",
       },
     ],
   },

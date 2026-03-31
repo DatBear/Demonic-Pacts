@@ -60,6 +60,10 @@ export default function Info() {
       glowClassName: "from-slate-200/25 via-sky-200/10 to-transparent",
       sigilClassName: "bg-slate-200/10 text-slate-100",
     },
+    wilderness: {
+      glowClassName: "from-rose-500/25 via-red-500/10 to-transparent",
+      sigilClassName: "bg-rose-500/10 text-rose-100",
+    },
   } as const;
 
   return <LeaguePageFrame
