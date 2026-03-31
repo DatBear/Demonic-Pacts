@@ -878,7 +878,7 @@ export const relicTiers: RelicTierData[] = [
     tier: 2,
     title: "Tier 2",
     passiveEffects: ["XP multiplier increases from 5x to 8x."],
-    status: "The Tier 2 relic Woodsman has been revealed.",
+    status: "The Tier 2 relics Woodsman and Hotfoot have been revealed.",
     relics: [
       {
         name: "Woodsman",
@@ -898,6 +898,23 @@ export const relicTiers: RelicTierData[] = [
           "Quetzal whistles no longer lose charges.",
         ],
         notes: [],
+      },
+      {
+        name: "Hotfoot",
+        summary: "An Agility-centered skilling relic that grants the Searing boots, turns movement into XP, and heavily upgrades course rewards and success rates.",
+        toggleableEffect: "Upon choosing this relic, you receive the Searing boots.",
+        activeEffects: [
+          "While the Searing boots are worn, you gain Agility experience based on your Agility level while you run.",
+          "While the Searing boots are worn, caught fish are automatically cooked.",
+          "While the Searing boots are worn, mined ore is automatically smelted.",
+          "Picking up some Termites or a Mark of grace from a course will automatically complete the lap, granting completion XP and 10,000 coins.",
+          "Marks of grace always have a 33% chance to spawn on all rooftop courses.",
+          "Completing a course grants double completion count and 25% bonus experience.",
+          "You have a 100% success rate on all Agility and Cooking actions.",
+          "You receive 2x Termites from the Colossal Wyrm Agility Course.",
+          "You receive 10x Crystal shards from the Prifddinas Agility Course.",
+        ],
+        notes: ["The Searing boots can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
       },
     ],
   },
