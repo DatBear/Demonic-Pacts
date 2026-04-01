@@ -1037,8 +1037,15 @@ export const relicTiers: RelicTierData[] = [
     tier: 7,
     title: "Tier 7",
     passiveEffects: ["XP multiplier increases from 12x to 16x."],
-    status: "Tier 7 relic choices have not been revealed yet.",
-    relics: [],
+    status: "The Tier 7 relic Reloaded has been revealed.",
+    relics: [
+      {
+        name: "Reloaded",
+        summary: "A flexibility relic that lets you take an extra relic pick from any lower tier, effectively reopening your build path late in the run.",
+        activeEffects: ["Choose another Relic from any tier below this one."],
+        notes: [],
+      },
+    ],
   },
   {
     tier: 8,
