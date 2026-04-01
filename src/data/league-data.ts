@@ -9,7 +9,7 @@ export interface LeagueSectionGroup {
 }
 
 export interface EchoBossReveal {
-  regionSlug: "varlamore" | "kandarin" | "kourend-kebos" | "fremennik" | "wilderness";
+  regionSlug: "asgarnia" | "varlamore" | "kandarin" | "kourend-kebos" | "fremennik" | "wilderness";
   regionName: string;
   bossName: string;
   bossWikiUrl: string;
@@ -183,6 +183,18 @@ export const yamasLairNotes: string[] = [
 ];
 
 export const echoBossReveals: EchoBossReveal[] = [
+  {
+    regionSlug: "asgarnia",
+    regionName: "Asgarnia",
+    bossName: "Cerberus",
+    bossWikiUrl: "https://oldschool.runescape.wiki/w/Cerberus_(Echo)",
+    knownDrops: [
+      {
+        name: "A new echo dagger",
+        description: "Can ignite, scales with elemental weaknesses, and has a special attack.",
+      },
+    ],
+  },
   {
     regionSlug: "varlamore",
     regionName: "Varlamore",

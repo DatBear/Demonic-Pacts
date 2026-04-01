@@ -44,6 +44,10 @@ export default function Info() {
     wilderness: "/regions/badge/Wilderness.png",
   } as const;
   const echoBossRegionVisuals = {
+    asgarnia: {
+      glowClassName: "from-blue-500/25 via-sky-400/10 to-transparent",
+      sigilClassName: "bg-blue-500/10 text-blue-100",
+    },
     varlamore: {
       glowClassName: "from-amber-400/25 via-orange-400/10 to-transparent",
       sigilClassName: "bg-amber-400/10 text-amber-100",
