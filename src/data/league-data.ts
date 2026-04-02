@@ -1001,7 +1001,7 @@ export const relicTiers: RelicTierData[] = [
     tier: 5,
     title: "Tier 5",
     passiveEffects: ["XP multiplier increases from 8x to 12x."],
-    status: "The Tier 5 relic Nature's Accord has been revealed.",
+    status: "The Tier 5 relics Nature's Accord and Larcenist have been revealed.",
     relics: [
       {
         name: "Nature's Accord",
@@ -1019,6 +1019,22 @@ export const relicTiers: RelicTierData[] = [
           "The Fairy mushroom cannot teleport you to an area you have not unlocked.",
         ],
         notes: ["The Fairy mushroom can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+      },
+      {
+        name: "Larcenist",
+        summary: "A thieving relic that guarantees successful steals, automates repeat actions, notes stolen goods, and heavily boosts core Thieving loot.",
+        activeEffects: [
+          "All Thieving actions have a 100% success rate.",
+          "You automatically repeat pickpocket attempts on NPCs.",
+          "You automatically repeat stall thefts.",
+          "Items stolen from pickpocketing and stalls are automatically noted.",
+          "Stalls never deplete, and guards will not stop you while stealing from them.",
+          "Your coin pouch capacity is increased by 10x.",
+          "Pickpocketing loot is increased by 10x, excluding scrolls.",
+          "Stall loot is increased by 10x.",
+          "House valuables stolen in Varlamore are increased by 10x.",
+        ],
+        notes: [],
       },
     ],
   },
