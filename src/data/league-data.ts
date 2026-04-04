@@ -1042,7 +1042,7 @@ export const relicTiers: RelicTierData[] = [
     tier: 6,
     title: "Tier 6",
     passiveEffects: ["No passive effect has been announced yet."],
-    status: "The Tier 6 relic Culling Spree has been revealed.",
+    status: "The Tier 6 relics Culling Spree and Grimoire have been revealed.",
     relics: [
       {
         name: "Culling Spree",
@@ -1058,6 +1058,17 @@ export const relicTiers: RelicTierData[] = [
           "Rune pouches, herb sacks, and looting bags can be purchased for free from the Slayer reward store.",
         ],
         notes: [],
+      },
+      {
+        name: "Grimoire",
+        summary: "A utility relic centered on full spellbook and prayer access, with instant spellbook swapping and built-in necromancy support through the Arcane grimoire.",
+        toggleableEffect: "Upon choosing this relic, you receive the Arcane grimoire.",
+        activeEffects: [
+          "The Grimoire can be used to freely swap between spellbooks.",
+          "The Grimoire acts as a Book of the dead.",
+          "You unlock access to all prayers and spells, regardless of area, quest, or diary requirements.",
+        ],
+        notes: ["The Arcane grimoire can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
       },
     ],
   },
