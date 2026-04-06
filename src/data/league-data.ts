@@ -951,7 +951,7 @@ export const relicTiers: RelicTierData[] = [
       "Slayer points are multiplied by 5 and you no longer need five starter tasks before earning points.",
       "Superior Slayer rates improve to a 1 in 50 chance.",
     ],
-    status: "The Tier 3 relic Evil Eye has been revealed.",
+    status: "The Tier 3 relics Evil Eye and Map of Alacrity have been revealed.",
     relics: [
       {
         name: "Evil Eye",
@@ -965,6 +965,19 @@ export const relicTiers: RelicTierData[] = [
           "The Evil Eye cannot teleport you into an area you have not unlocked.",
         ],
         notes: ["The Evil Eye can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+      },
+      {
+        name: "Map of Alacrity",
+        summary: "A mobility relic that grants the Map of alacrity, letting you teleport to Agility shortcuts while still enforcing shortcut and location requirements.",
+        toggleableEffect: "Upon choosing this relic, you receive the Map of alacrity.",
+        activeEffects: [
+          "The Map of alacrity lets you teleport to Agility shortcuts.",
+          "You are sent to the less favourable side of the shortcut, or to the starting side if it is one-way.",
+          "Teleports can only be used if you meet all requirements to reach their location.",
+          "Shortcuts retain all of their usual requirements.",
+          "The Map of alacrity ignores Wilderness teleport restrictions.",
+        ],
+        notes: ["The Map of alacrity can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
       },
     ],
   },
