@@ -159,6 +159,10 @@ export default function Relics() {
                         <p className="mb-3 text-sm font-semibold">Active Effects</p>
                         <PassiveList items={relic.activeEffects} />
                       </div>
+                      {relic.detailGroups && relic.detailGroups.map(group => <div key={`${relic.name}-${group.title}`}>
+                        <p className="mb-3 text-sm font-semibold">{group.title}</p>
+                        <PassiveList items={group.items} />
+                      </div>)}
                       {relic.notes.length > 0 && <div>
                         <p className="mb-3 text-sm font-semibold">Notes</p>
                         <PassiveList items={relic.notes} />

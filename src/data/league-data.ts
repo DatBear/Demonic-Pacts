@@ -41,6 +41,7 @@ export interface RelicData {
   toggleableEffects?: string[];
   activeEffects: string[];
   notes: string[];
+  detailGroups?: LeagueSectionGroup[];
 }
 
 export interface RelicTierData {
@@ -988,7 +989,7 @@ export const relicTiers: RelicTierData[] = [
       "Eligible item drops increase from 2x to 5x as common.",
       "Minigame point boosts increase from 4x to 8x.",
     ],
-    status: "The Tier 4 relic Conniving Clues has been revealed.",
+    status: "The Tier 4 relics Conniving Clues, Transmutation, and Butler's Bell have been revealed.",
     relics: [
       {
         name: "Conniving Clues",
@@ -1008,13 +1009,82 @@ export const relicTiers: RelicTierData[] = [
         ],
         notes: [],
       },
+      {
+        name: "Transmutation",
+        summary: "A skilling utility relic that grants the Transmutation ledger, turning alchemy into resource conversion spells with bank-routing options and repeat casting for noted stacks.",
+        toggleableEffects: [
+          "Alchemic spells transmute items.",
+          "Transmutation spells bank noted products.",
+        ],
+        activeEffects: [
+          "High alchemy and low alchemy become two new spells: Alchemic Divergence and Alchemic Convergence.",
+          "Alchemic Divergence upgrades up to 10 of a resource into a higher tier.",
+          "Alchemic Convergence downgrades up to 10 of a resource into a lower tier.",
+          "Both spells cost 1 Nature rune, have no level requirement, and grant 10 Magic XP per item transmuted before league XP multipliers.",
+          "The Transmutation ledger can be equipped and acts as an infinite source of Nature runes.",
+          "Using items on the Transmutation ledger shows what they can turn into.",
+          "When cast on a noted item, these spells automatically re-cast over time while items remain available in the same inventory slot.",
+          "You can still cast normal alchemy spells through the toggleable effect or by configuring them in your spellbook, but alchemy spells do not automatically re-cast.",
+        ],
+        notes: ["The Transmutation ledger can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+        detailGroups: [
+          {
+            title: "Transmutable Resources",
+            items: [
+              "Hides",
+              "Runes",
+              "Ashes",
+              "Uncut gems",
+              "Compost",
+              "Seeds (Cactus, Hardwood Tree, Fruit Tree, Tree, Bush, Hops, Herbs, Flower, Allotment)",
+              "Logs (Normal, Pure)",
+              "Mining (Normal, Crafting)",
+              "Bones",
+              "Raw Fish",
+            ],
+          },
+        ],
+      },
+      {
+        name: "Butler's Bell",
+        summary: "A passive skilling relic that grants the Butler's bell, summoning an offline-capable Demon butler to gather and process resources for you over time.",
+        toggleableEffect: "Upon choosing this relic, you receive the Butler's bell.",
+        activeEffects: [
+          "When the bell is rung, a Demon butler is summoned to work for you.",
+          "The butler continues working even while you are offline.",
+          "When the Demon butler processes resources for you, he shares 10 XP before league XP multipliers in the relevant production skill per resource.",
+        ],
+        notes: ["The Butler's bell can be retrieved from the Leagues Tutor in Yama's Lair if lost."],
+        detailGroups: [
+          {
+            title: "Gathered Resources",
+            items: [
+              "Mining ores at 8 per minute.",
+              "Catching fish at 14 per minute.",
+              "Chopping logs at 10 per minute.",
+              "Picking flax at 50 per minute.",
+              "Farming herbs at 10 per minute.",
+            ],
+          },
+          {
+            title: "Processing Options",
+            items: [
+              "The butler can process gathered ores into bars at half the listed gathering rates.",
+              "The butler can process gathered raw fish into cooked fish at half the listed gathering rates.",
+              "The butler can process gathered logs into planks at half the listed gathering rates.",
+              "The butler can process gathered flax into bowstrings at half the listed gathering rates.",
+              "The butler can process gathered herbs into unfinished potions at half the listed gathering rates.",
+            ],
+          },
+        ],
+      },
     ],
   },
   {
     tier: 5,
     title: "Tier 5",
     passiveEffects: ["XP multiplier increases from 8x to 12x."],
-    status: "The Tier 5 relics Nature's Accord and Larcenist have been revealed.",
+    status: "The Tier 5 relics Nature's Accord, Larcenist, and Soul Harvest have been revealed.",
     relics: [
       {
         name: "Nature's Accord",
@@ -1048,6 +1118,26 @@ export const relicTiers: RelicTierData[] = [
           "House valuables stolen in Varlamore are increased by 10x.",
         ],
         notes: [],
+      },
+      {
+        name: "Soul Harvest",
+        summary: "A farming-and-remains relic that converts crop harvests, bones, and ashes into stackable Soul shards with Runecraft and Prayer utility.",
+        toggleableEffect: "All dropped bones and ashes will be turned into Soul Shards.",
+        activeEffects: [
+          "While harvesting any farming crop, or when NPCs would drop bones or ashes, you instead harvest stackable Soul shards.",
+          "You receive 1 shard per 4 XP gained while harvesting your crops.",
+          "Higher-tier bones and ashes yield more shards, roughly equal to the bone shard equivalent for that item tier.",
+        ],
+        notes: [],
+        detailGroups: [
+          {
+            title: "Soul Shard Uses",
+            items: [
+              "Soul shards can be used in place of Pure essence while training Runecraft.",
+              "100 Soul shards can be sacrificed at the Libation bowl at the Teomat for 550 Prayer XP before league multipliers, without requiring Libation vine.",
+            ],
+          },
+        ],
       },
     ],
   },
